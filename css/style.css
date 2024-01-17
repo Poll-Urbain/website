@@ -98,8 +98,9 @@ h1 {
 }
 
 #camera-pic {
-    width: 10%;
-    height: 10%;
+    margin-top: 5vh;
+    width: 30%;
+    height: 30%;
 }
 
 .popup-content {
