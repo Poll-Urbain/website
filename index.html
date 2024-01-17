@@ -68,7 +68,7 @@
         }
     </script>
     <script>
-        var map;
+        var map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates
         if (isMobile) {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition((position) => {
@@ -81,9 +81,6 @@
                 alert("Geolocation services are not supported by your browser.\n\
                 You can not use the camera on this app")
             }
-        }
-        else {
-            map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates
         }
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
