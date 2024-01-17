@@ -17,12 +17,15 @@
     .popup-content {
       max-height: 300px; /* Set your desired maximum height */
       overflow-y: auto; /* Enable vertical scroll if content exceeds the maximum height */
+      text-align: center;
+
     }
 
     img {
-      height: 150px; /* Automatically calculate the height to maintain aspect ratio */
-      width: auto; /* Set the desired width */
-
+      max-width: 200px;
+      max-height: 170px;
+      width: 90%; /* Set the desired width */
+      height: auto; /* Automatically calculate the height to maintain aspect ratio */
     }
   </style>
 </head>
@@ -54,7 +57,7 @@
           htmlPopup = "<div class='popup-content'>" +
         "<b>"+project.name +"</b><br>" +
         "Caractéristiques (proba):"+ project.characteristics+"<br>" +
-        '<img src="images/'+project.photo_name+'" alt="'+ project.name +'Image"' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
+        '<div><img src="images/'+project.photo_name+'" alt="'+ project.name +'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
         '<br><button onclick="onButtonClick()">Voter pour</button>' +
         '<br><label for="dropdown">Choose an option:</label>' +
         '<select id="dropdown">' +
