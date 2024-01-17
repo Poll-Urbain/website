@@ -1,4 +1,4 @@
-{
+{ 
     "projects": [
       {
         "name": "Le Dôme",
@@ -8,9 +8,9 @@
           "longitude": -0.3469949746295181
         },
         "score": 8.7,
-        "photo_name": "ledome_vegetal.png",
+        "photo_name": "ledome_vegetal.jpg",
         "characteristics": [
-          "+35°C en été",
+          "+5°C en été",
           "Zone inondable",
           "Risque d'invasion de nuisible"
         ]
@@ -25,7 +25,7 @@
         "score": 9.2,
         "photo_name": "chu.jpg",
         "characteristics": [
-            "+35°C en été",
+            "+7°C en été",
             "Zone inondable",
             "Risque d'invasion de nuisible"
         ]

@@ -1,88 +1,153 @@
- 
-   var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates
-   var marker = []
-   var i = 0;
+//import * as fs from 'fs';
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+const R = 6371e3; // Earth radius metres
 
-    fetch('projects.json')
+class Coordinates {
+    constructor(lat, lon) {
+        this.lat = lat;
+        this.lon = lon;
+    }
+}
+
+class Site {
+    constructor(coordinates) {
+      this.name = null;
+      this.address = null;
+      this.coordinates = coordinates;
+      this.imageName = null;
+      this.score = null;
+      this.characteritics = new Array(); //disctionnary 
+    }
+}
+
+class Vote {
+  constructor(site, user, characteritic) {
+    this.site = site;
+    this.user = user;
+    this.characteritic = characteritic;
+  }
+}
+
+class User {
+  constructor(name, address) {
+    this.name = name;
+    this.address = address;
+    this.coordinates = null;
+    this.init()
+  }
+
+
+  // Async method to initialize the coordinates
+  init() {
+    return geocodeAddress(this.address).then(coords => {
+      this.coordinates = coords;
+    });
+  }
+}
+
+var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates
+var marker = []
+var i = 0;
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+   }).addTo(map);
+
+
+function readSitesFromJSON(jsonName) {
+  return fetch(jsonName + '.json')
       .then(response => response.json())
       .then(jsonData => {
-        // Iterating through projects
-        jsonData.projects.forEach(project => {
-          marker[i] = L.marker([project.coordinates.latitude, project.coordinates.longitude]).addTo(map);
-          htmlPopup = "<div class='popup-content'>" +
-        "<b>"+project.name +"</b><br>" +
-        "Caractéristiques (proba):"+ project.characteristics+"<br>" +
-        '<div><img src="images/'+project.photo_name+'" alt="'+ project.name +'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
-        '<br><button onclick="onButtonClick()">Voter pour</button>' +
-        '<br><label for="dropdown">Choose an option:</label>' +
-        '<select id="dropdown">' +
-          '<option value="Chaleur">Chaleur</option>' +
-          '<option value="Inondation">Inondation</option>' +
-          '<option value="Air">Air</option>' +
-        '</select>' +
-        "</div>";
+  
+        user = new User("alan", "4 rue d'auge");
+        console.log(user.coordinates);
+        let sites = [];
+        for(let site of jsonData.projects){
+          sites.push(site);
+        }
+        return sites;
+      });
+}
 
-          marker[i].bindPopup(htmlPopup);
-          
-          console.log("Project Name: " + project.name);
-          console.log("Address: " + project.address);
-          console.log("Coordinates: " + project.coordinates.latitude + ", " + project.coordinates.longitude);
-          console.log("Score: " + project.score);
-          console.log("Photo Name: " + project.photo_name);
-          console.log("Characteristics: " + project.characteristics.join(", "));
-          console.log("\n");
-          i++;
-        });
-      })
-      .catch(error => console.error('Error fetching JSON:', error));
-    
+function addPins(sites){
+    sites.forEach(project => {
+        marker[i] = L.marker([project.coordinates.latitude, project.coordinates.longitude]).addTo(map);
+        htmlPopup = "<div class='popup-content'>" +
+      "<b>"+project.name +"</b><br>" +
+      "Caractéristiques (proba):"+ project.characteristics+"<br>" +
+      '<div><img src="images/'+project.photo_name+'" alt="'+ project.name +'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
+      '<br><button onclick="onButtonClick()">Voter pour</button>' +
+      '<br><label for="dropdown">Choose an option:</label>' +
+      '<select id="dropdown">' +
+        '<option value="Chaleur">Chaleur</option>' +
+        '<option value="Inondation">Inondation</option>' +
+        '<option value="Air">Air</option>' +
+      '</select>' +
+      "</div>";
 
-    // Function to handle button click
-    function onButtonClick() {
-      var dropdownValue = document.getElementById('dropdown').value;
-      alert("Button clicked! Dropdown selected value: " + dropdownValue);
-    }
+        marker[i].bindPopup(htmlPopup);
+        
+        console.log("Project Name: " + project.name);
+        console.log("Address: " + project.address);
+        console.log("Coordinates: " + project.coordinates.latitude + ", " + project.coordinates.longitude);
+        console.log("Score: " + project.score);
+        console.log("Photo Name: " + project.photo_name);
+        console.log("Characteristics: " + project.characteristics.join(", "));
+        console.log("\n");
+        i++;
+      });
+}
 
-    // Function to geocode the entered address and display coordinates
-    function geocodeAddress() {
-      var addressInput = document.getElementById('address-input').value;
+function distance(coord1, coord2) {
+  const r = 6371e3; // meter
+  const p = Math.PI / 180;
 
-      // Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
-      var apiKey = 'a5d1c0cbcabb4a1a8f506c8415d80cb3';
-      var geocodeUrl = 'https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(addressInput) + '&key=' + apiKey;
+  const a = 0.5 - Math.cos((coord2.lat - coord1.lat) * p) / 2
+                + Math.cos(coord1.lat * p) * Math.cos(coord2.lat * p) *
+                  (1 - Math.cos((coord2.lon - coord1.lon) * p)) / 2;
 
-      fetch(geocodeUrl)
-        .then(response => response.json())
-        .then(data => {
-          if (data.results.length > 0) {
-            var coordinates = data.results[0].geometry;
-            var coordinatesText = "Coordinates for '" + addressInput + "': " +
-              "Latitude: " + coordinates.lat.toFixed(6) +
-              ", Longitude: " + coordinates.lng.toFixed(6);
+  return 2 * r * Math.asin(Math.sqrt(a));
+}
 
-            // Display coordinates in the side panel
-            document.getElementById('spot-info').innerHTML = "<div class='popup-content'>" + coordinatesText + "</div>";
-          } else {
-            alert("Geocoding failed. Please enter a valid address.");
-          }
-        })
-        .catch(error => {
-          console.error('Error during geocoding:', error);
-          alert("An error occurred during geocoding. Please try again.");
-        });
-    }
+/*function computeVoteValue(vote) {
 
-    // Example side panel
-    var spotInfo = document.getElementById('spot-info');
+  d = distance(vote.site.coordinates, vote.user.coordinates)
+  value = 1/d * vote.site.Nbp1/vote.site.Nbp; // TO change with dict
+}*/
 
-    map.on('click', function(e) {
-      var clickedLatLng = e.latlng;
-      var clickedCoordinates = "Latitude: " + clickedLatLng.lat.toFixed(6) + "<br>Longitude: " + clickedLatLng.lng.toFixed(6);
+// Function to geocode the entered address and display coordinates with parameters
+function geocodeAddress(address) {
 
-      // Display clicked coordinates in the side panel
-      spotInfo.innerHTML = "<div class='popup-content'><b>Clicked Point</b><br>" + clickedCoordinates + "</div>";
+  // Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
+  var apiKey = 'a5d1c0cbcabb4a1a8f506c8415d80cb3';
+  var geocodeUrl = 'https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(address) + '&key=' + apiKey;
+
+  return fetch(geocodeUrl)
+    .then(response => response.json())
+    .then(data => {
+      if (data.results.length > 0) {
+        return data.results[0].geometry; // return the coordinates
+      } else {
+        throw new Error("Geocoding failed. Please enter a valid address.");
+      }
     });
+}
+
+addPins(readSitesFromJSON('projects'));
+
+/*
+function distance(coord1, coord2) {
+    var φ1 = coord.lat * Math.PI/180; // φ, λ in radians
+    var φ2 = coord2.lat * Math.PI/180;
+    var Δφ = (coord2.lat - coord1.lat) * Math.PI/180;
+    var Δλ = (coord2.lon - coord1.lon) * Math.PI/180;
+    
+    var haversine = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+            Math.cos(φ1) * Math.cos(φ2) *
+            Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    const d = R * c; // in metres
+    return d;
+}*/
+
