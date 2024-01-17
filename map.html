@@ -73,7 +73,7 @@
       alert("Button clicked! Dropdown selected value: " + dropdownValue);
     }
 
-    // Function to geocode the entered address and display coordinates
+    // Function to geocode the entered address and display coordinates from text field
     function geocodeAddress() {
       var addressInput = document.getElementById('address-input').value;
 
@@ -101,6 +101,8 @@
           alert("An error occurred during geocoding. Please try again.");
         });
     }
+
+    
 
     // Example side panel
     var spotInfo = document.getElementById('spot-info');
