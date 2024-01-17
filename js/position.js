@@ -40,7 +40,7 @@ async function getImage(event) {
     file = event.target.files[0];
     let url = window.URL.createObjectURL(file);
 
-    await delay(1000);
+    await delay(10000);
 
 
     onImageTaken(url);
