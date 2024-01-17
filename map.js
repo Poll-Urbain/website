@@ -19,10 +19,7 @@ class Site {
       this.characteritics = new Array();
     }
 }
-  
-window.addEventListener('load', function(){
-  readSitesFromJSON("projects");
-});
+
 
 function readSitesFromJSON(jsonName) {
   const fs = require('fs');

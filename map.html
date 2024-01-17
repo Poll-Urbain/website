@@ -19,7 +19,7 @@
       overflow-y: auto; /* Enable vertical scroll if content exceeds the maximum height */
     }
   </style>
-  <script src="map.js" type="text/javascript"> // To change with server address </script> 
+  <script src="http://127.0.0.1:5500/map.js" type="text/javascript"> // To change with server address </script> 
 </head>
 <body>
   <div id="map-container">
@@ -40,8 +40,6 @@
     var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates
     var marker = []
     var i = 0;
-    
-    var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
