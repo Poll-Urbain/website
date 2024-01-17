@@ -68,23 +68,7 @@
         }
     </script>
     <script>
-        var map;
-        if (isMobile) {
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    setMap(position.coords.latitude, position.coords.longitude);
-                }, error => {
-                    alert("Need permission to use your location in order to use your camera");
-                });
-            }
-            else {
-                alert("Geolocation services are not supported by your browser.\n\
-                You can not use the camera on this app")
-            }
-        }
-        else {
-            map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates;
-        }
+        var map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates;
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -152,6 +136,22 @@
             // Display clicked coordinates in the side panel
             spotInfo.innerHTML = "<div class='popup-content'><b>Clicked Point</b><br>" + clickedCoordinates + "</div>";
         });
+    </script>
+
+    <script>
+        if (isMobile) {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    setMap(position.coords.latitude, position.coords.longitude);
+                }, error => {
+                    alert("Need permission to use your location in order to use your camera");
+                });
+            }
+            else {
+                alert("Geolocation services are not supported by your browser.\n\
+                You can not use the camera on this app")
+            }
+        }
     </script>
 
 </body>

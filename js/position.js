@@ -44,7 +44,6 @@ function pinOnMap(latitude, longitude, imageURI) {
 
 function setMap(latitude, longitude) {
     map = L.map('map').setView([latitude, longitude], 17);
-    alert("test");
 }
 
 var file = document.getElementById('file-input');
