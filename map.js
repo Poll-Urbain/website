@@ -2,6 +2,7 @@
 
 const R = 6371e3; // Earth radius metres
 
+
 class Coordinates {
     constructor(lat, lon) {
         this.lat = lat;
@@ -44,14 +45,10 @@ class User {
   }
 }
 
-
-
-
 function readSitesFromJSON(jsonName) {
   return fetch(jsonName + '.json')
       .then(response => response.json())
       .then(jsonData => {
-  
         user = new User("alan", "4 rue d'auge");
         console.log(user.coordinates);
         let sites = [];
@@ -73,11 +70,11 @@ function distance(coord1, coord2) {
   return 2 * r * Math.asin(Math.sqrt(a));
 }
 
-/*function computeVoteValue(vote) {
+function computeVoteValue(vote) {
 
   d = distance(vote.site.coordinates, vote.user.coordinates)
   value = 1/d * vote.site.Nbp1/vote.site.Nbp; // TO change with dict
-}*/
+}
 
 // Function to geocode the entered address and display coordinates with parameters
 function geocodeAddress(address) {
