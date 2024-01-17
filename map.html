@@ -32,10 +32,14 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> 
 
   <script>
-
-    window.onload = (event) => {
+   
+    window.onload = function() {
       readSitesFromJSON("projects");
     };
+
+    var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates
+    var marker = []
+    var i = 0;
     
     var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates
 
