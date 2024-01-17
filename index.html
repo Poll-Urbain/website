@@ -68,11 +68,11 @@
         }
     </script>
     <script>
-        var map = L.map('map').setView([50.183333, -0.350], 17); // Updated coordinates
+        var map;
         if (isMobile) {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition((position) => {
-                    map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 17); // Updated coordinates
+                    setMap(position.coords.latitude, position.coords.longitude);
                 }, error => {
                     alert("Need permission to use your location in order to use your camera");
                 });
@@ -81,6 +81,9 @@
                 alert("Geolocation services are not supported by your browser.\n\
                 You can not use the camera on this app")
             }
+        }
+        else {
+            map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates;
         }
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
