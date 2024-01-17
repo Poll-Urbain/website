@@ -51,6 +51,10 @@
             <input type="text" id="address-input" placeholder="Enter address">
             <button onclick="geocodeAddress()">Show Coordinates</button>
         </div>
+        <div id="camera_button">
+            <!--button to add camera-->
+            <input type="file" name="image" accept="image/*" capture="environment">
+        </div>
     </main>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -66,8 +70,9 @@
 
         const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
 
-        if (isMobile) {
-            console.log("mobile");
+        if (!isMobile) {
+            // If not mobile, hide the camera button
+            document.getElementById('camera_button').style.display = 'none';
         }
     </script>
     <script>
