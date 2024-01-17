@@ -32,16 +32,15 @@ function pinOnMap(latitude, longitude, imageURI) {
     marker.bindPopup(pin).openPopup();
 }
 
-function previewFile() {
-    var preview = document.getElementById('preview');
-    var file = document.querySelector('input[type=file]').files[0];
-    var reader = new FileReader();
 
-    reader.addEventListener("load", function () {
-        preview.src = reader.result;
-    }, false);
+var preview = document.getElementById('preview');
+var file = document.getElementById('file-input');
 
-    if (file) {
-        reader.readAsDataURL(file);
-    }
+function previewFile(event) {
+    file = event.target.files[0];
+    let url = window.URL.createObjectURL(file);
+
+    preview.src = url;
 }
+
+file?.addEventListener('change', previewFile);
