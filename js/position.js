@@ -34,20 +34,16 @@ function pinOnMap(latitude, longitude, imageURI) {
 
 var file = document.getElementById('file-input');
 
-function getImage(event) {
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
+async function getImage(event) {
     file = event.target.files[0];
     let url = window.URL.createObjectURL(file);
 
-    waitForImageLoad(url);
-    onImageTaken(url);
-}
+    await delay(1000);
 
-function waitForImageLoad(url) {
-    var img = new Image();
-    img.onload = function () {
-        window.URL.revokeObjectURL(url);
-    }
-    img.src = url;
+
+    onImageTaken(url);
 }
 
 file?.addEventListener('change', getImage);
