@@ -36,7 +36,7 @@
         <div id="camera-button">
             <!--button to add camera-->
             <label for="file-input">
-                <img src="images/pics/camera-icon.png" />
+                <img id="camera-pic" src="images/pics/camera-icon.png" />
             </label>
             <input id="file-input" type="file" name="image" accept="image/*" capture="environment">
         </div>
@@ -55,14 +55,14 @@
 
         const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
 
-        if (isMobile) {
-            document.getElementById('map').style.height = "60vh";
-        }
-        else {
-            // If not mobile, hide the camera button
-            document.getElementById('camera-button').style.display = 'none';
-            document.getElementById('map').style.height = "80vh";
-        }
+        // if (isMobile) {
+        document.getElementById('map').style.height = "60vh";
+        // }
+        // else {
+        //     // If not mobile, hide the camera button
+        //     document.getElementById('camera-button').style.display = 'none';
+        //     document.getElementById('map').style.height = "80vh";
+        // }
     </script>
     <script>
         var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates

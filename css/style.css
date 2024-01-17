@@ -93,8 +93,13 @@ h1 {
     margin: 20px auto;
 }
 
-#camera-button {
+#camera-button>input {
     display: none;
+}
+
+#camera-pic {
+    width: 10%;
+    height: 10%;
 }
 
 .popup-content {
