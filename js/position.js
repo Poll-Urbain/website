@@ -1,3 +1,15 @@
+if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition((position) => {
+        // ask for permission
+    }, error => {
+        alert("Need permission to use your location in order to use your camera");
+    });
+}
+else {
+    alert("Geolocation services are not supported by your browser.\n\
+            You can not use the camera on this app")
+}
+
 function onImageTaken(imageURI) {
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -34,13 +46,9 @@ function pinOnMap(latitude, longitude, imageURI) {
 
 var file = document.getElementById('file-input');
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
-
-async function getImage(event) {
+function getImage(event) {
     file = event.target.files[0];
     let url = window.URL.createObjectURL(file);
-
-    await delay(10000);
 
 
     onImageTaken(url);
