@@ -30,11 +30,31 @@
   </div>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates
+   
+   var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
+    fetch('projects.json')
+      .then(response => response.json())
+      .then(jsonData => {
+        // Iterating through projects
+        jsonData.projects.forEach(project => {
+          console.log("Project Name: " + project.name);
+          console.log("Address: " + project.address);
+          console.log("Coordinates: " + project.coordinates.latitude + ", " + project.coordinates.longitude);
+          console.log("Score: " + project.score);
+          console.log("Photo Name: " + project.photo_name);
+          console.log("Characteristics: " + project.characteristics.join(", "));
+          console.log("\n");
+        });
+      })
+      .catch(error => console.error('Error fetching JSON:', error));
+
+
+
+
 
     // Example spot with updated coordinates, larger popup, a button, and a dropdown list
     var ledomeVegetal = L.marker([49.18171143760297, -0.34688136578783596]).addTo(map);
