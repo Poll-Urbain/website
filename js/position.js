@@ -42,10 +42,6 @@ function pinOnMap(latitude, longitude, imageURI) {
     marker.bindPopup(pin).openPopup();
 }
 
-function setMap(latitude, longitude) {
-    map = map.setView([latitude, longitude], 17);
-}
-
 var file = document.getElementById('file-input');
 
 function getImage(event) {
