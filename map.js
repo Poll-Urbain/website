@@ -22,14 +22,15 @@ class Site {
 
 
 function readSitesFromJSON(jsonName) {
-  const fs = require('fs');
-  fs.readFile(jsonName + '.json', 'utf-8', function (err, data) {
-    if (err) throw err;
-    var sites = new Site();
-    sites = JSON.parse(data);
-  
-    sites.forEach((element) => console.log(element));
-  });
+  return fetch(jsonName + '.json')
+      .then(response => response.json())
+      .then(jsonData => {
+        let sites = [];
+        for(let site of jsonData.projects){
+          sites.push(site);
+        }
+        return sites;
+      });
 }
 
 function distance(coord1, coord2) {
