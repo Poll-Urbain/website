@@ -38,7 +38,16 @@ function getImage(event) {
     file = event.target.files[0];
     let url = window.URL.createObjectURL(file);
 
+    waitForImageLoad(url);
     onImageTaken(url);
+}
+
+function waitForImageLoad(url) {
+    var img = new Image();
+    img.onload = function () {
+        window.URL.revokeObjectURL(url);
+    }
+    img.src = url;
 }
 
 file?.addEventListener('change', getImage);
