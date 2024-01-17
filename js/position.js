@@ -32,15 +32,13 @@ function pinOnMap(latitude, longitude, imageURI) {
     marker.bindPopup(pin).openPopup();
 }
 
-
-var preview = document.getElementById('preview');
 var file = document.getElementById('file-input');
 
-function previewFile(event) {
+function getImage(event) {
     file = event.target.files[0];
     let url = window.URL.createObjectURL(file);
 
-    preview.src = url;
+    onImageTaken(url);
 }
 
-file?.addEventListener('change', previewFile);
+file?.addEventListener('change', getImage);
