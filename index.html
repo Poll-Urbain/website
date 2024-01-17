@@ -38,7 +38,9 @@
             <label for="file-input">
                 <img id="camera-pic" src="images/pics/camera-icon.png" />
             </label>
-            <input id="file-input" type="file" name="image" accept="image/*" capture="environment">
+            <input id="file-input" type="file" name="image" accept="image/*" capture="environment"
+                onchange="previewFile()">
+            <img src="" height="200" alt="Image preview...">
         </div>
     </main>
 
@@ -55,6 +57,11 @@
 
         const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
 
+
+        // include script position.js
+        var script = document.createElement('script');
+        script.src = 'js/position.js';
+        document.head.appendChild(script);
         if (isMobile) {
             document.getElementById('map').style.height = "60vh";
         }
