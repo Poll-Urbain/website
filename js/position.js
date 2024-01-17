@@ -1,14 +1,13 @@
-if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition((position) => {
-        // ask for permission
-    }, error => {
-        alert("Need permission to use your location in order to use your camera");
-    });
-}
-else {
-    alert("Geolocation services are not supported by your browser.\n\
-            You can not use the camera on this app")
-}
+navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
+    /* result.status = "prompt" */
+});
+
+
+navigator.geolocation.getCurrentPosition(function (result) { /* ... */ })
+
+navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
+    /* result.status = "granted" */
+});
 
 function onImageTaken(imageURI) {
     if ("geolocation" in navigator) {
