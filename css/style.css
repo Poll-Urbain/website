@@ -88,11 +88,13 @@ h1 {
 }
 
 #map {
-    height: 60vh;
-    /* Increased height */
     width: 90%;
     /* Reduced width */
     margin: 20px auto;
+}
+
+#camera-button {
+    display: none;
 }
 
 .popup-content {

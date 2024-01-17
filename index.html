@@ -33,9 +33,12 @@
             <input type="text" id="address-input" placeholder="Enter address">
             <button onclick="geocodeAddress()">Show Coordinates</button>
         </div>
-        <div id="camera_button">
+        <div id="camera-button">
             <!--button to add camera-->
-            <input type="file" name="image" accept="image/*" capture="environment">
+            <label for="file-input">
+                <img src="images/pics/camera-icon.png" />
+            </label>
+            <input id="file-input" type="file" name="image" accept="image/*" capture="environment">
         </div>
     </main>
 
@@ -52,9 +55,13 @@
 
         const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
 
-        if (!isMobile) {
+        if (isMobile) {
+            document.getElementById('map').style.height = "60vh";
+        }
+        else {
             // If not mobile, hide the camera button
-            document.getElementById('camera_button').style.display = 'none';
+            document.getElementById('camera-button').style.display = 'none';
+            document.getElementById('map').style.height = "80vh";
         }
     </script>
     <script>
