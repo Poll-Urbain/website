@@ -55,13 +55,11 @@
 
         const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
 
-
-        // include script position.js
-        var script = document.createElement('script');
-        script.src = 'js/position.js';
-        document.head.appendChild(script);
         if (isMobile) {
             document.getElementById('map').style.height = "60vh";
+            var script = document.createElement('script');
+            script.src = 'js/position.js';
+            document.head.appendChild(script);
         }
         else {
             // If not mobile, hide the camera button

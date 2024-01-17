@@ -23,7 +23,6 @@ function onImageTaken(imageURI) {
     }
 }
 
-
 function pinOnMap(latitude, longitude, imageURI) {
     var pin =
         "<div class='popup-content'>" +
@@ -48,7 +47,6 @@ var file = document.getElementById('file-input');
 function getImage(event) {
     file = event.target.files[0];
     let url = window.URL.createObjectURL(file);
-
 
     onImageTaken(url);
 }
