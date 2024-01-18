@@ -47,167 +47,158 @@
             var script = document.createElement('script');
             script.src = 'rank.js';
             document.head.appendChild(script);
-        }
-        var Sites;
-        window.onload = async function () {
-            try {
-                Sites = await readSitesFromJSON("projects");
 
-            } catch (error) {
-                console.error("Error loading sites:", error);
+
+            var map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates
+            var marker = []
+            var i = 0;
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+
+            function addPins(sites) {
+                for (let i = 0; i < sites.length; i++) {
+                    marker[i] = L.marker([sites[i].coordinates.latitude, sites[i].coordinates.longitude]).addTo(map);
+                    htmlPopup = "<div class='popup-content'>" +
+                        "<b>" + sites[i].name + "</b><br>" +
+                        "Caractéristiques (proba):" + sites[i].characteristics + "<br>" +
+                        '<div><img src="images/' + sites[i].photo_name + '" alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
+                        '<br><button onclick="onButtonClick()">Voter pour</button>' +
+                        '<br><label for="dropdown">Choose an option:</label>' +
+                        '<select id="dropdown">' +
+                        '<option value="Chaleur">Chaleur</option>' +
+                        '<option value="Inondation">Inondation</option>' +
+                        '<option value="Air">Air</option>' +
+                        '</select>' +
+                        "</div>";
+                    marker[i].bindPopup(htmlPopup);
+                }
+                // Add a zone marker
+                var zone = L.marker([49.211029, -0.363451]).addTo(map);
+
+                zone.on('click', function () {
+                    loadRankScript();
+                });
+
+                zone.bindPopup(
+                    '<div id="image-container" class="image-container">' +
+                    "<b>Classement des préférences des votes</b><br>" +
+                    "<br>" +
+                    '</div>'
+                );
+
+                zone.setIcon(L.icon({
+                    iconUrl: 'images/icons/zone.png',
+                    iconSize: [30, 50],
+                    iconAnchor: [25, 50],
+                    popupAnchor: [0, -50]
+                }));
+                zone.bindTooltip("Côte de nacre", {
+                    permanent: true,
+                    direction: 'right',
+                    offset: [0, 0]
+                });
             }
-        };
 
-        var map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates
-        var marker = []
-        var i = 0;
+            var Sites;
+            window.onload = async function () {
+                try {
+                    Sites = await readSitesFromJSON("projects");
+                    console.log(Sites[0].name);
+                    addPins(Sites);
+                } catch (error) {
+                    console.error("Error loading sites:", error);
+                }
+            };
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-
-        function addPins(sites) {
-            for (let i = 0; i < sites.length; i++) {
-                marker[i] = L.marker([sites[i].coordinates.latitude, sites[i].coordinates.longitude]).addTo(map);
-                htmlPopup = "<div class='popup-content'>" +
-                    "<b>" + sites[i].name + "</b><br>" +
-                    "Caractéristiques (proba):" + sites[i].characteristics + "<br>" +
-                    '<div><img src="images/' + sites[i].photo_name + '" alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
-                    '<br><button onclick="onButtonClick()">Voter pour</button>' +
-                    '<br><label for="dropdown">Choose an option:</label>' +
-                    '<select id="dropdown">' +
-                    '<option value="Chaleur">Chaleur</option>' +
-                    '<option value="Inondation">Inondation</option>' +
-                    '<option value="Air">Air</option>' +
-                    '</select>' +
-                    "</div>";
-                marker[i].bindPopup(htmlPopup);
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", function () {
+                    navigator.serviceWorker
+                        .register("js/serviceWorker.js")
+                        .then(res => console.log("service worker registered"))
+                        .catch(err => console.log("service worker not registered", err))
+                })
             }
-            // Add a zone marker
-            var zone = L.marker([49.211029, -0.363451]).addTo(map);
 
-            zone.on('click', function () {
-                loadRankScript();
-            });
+            const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
 
-            zone.bindPopup(
-                '<div id="image-container" class="image-container">' +
-                "<b>Classement des préférences des votes</b><br>" +
-                "<br>" +
-                '</div>'
-            );
-
-            zone.setIcon(L.icon({
-                iconUrl: 'images/icons/zone.png',
-                iconSize: [30, 50],
-                iconAnchor: [25, 50],
-                popupAnchor: [0, -50]
-            }));
-            zone.bindTooltip("Côte de nacre", {
-                permanent: true,
-                direction: 'right',
-                offset: [0, 0]
-            });
-        }
-
-        var Sites;
-        window.onload = async function () {
-            try {
-                Sites = await readSitesFromJSON("projects");
-                console.log(Sites[0].name);
-                addPins(Sites);
-            } catch (error) {
-                console.error("Error loading sites:", error);
+            if (isMobile) {
+                document.getElementById('map').style.height = "60vh";
+                var script = document.createElement('script');
+                script.src = 'js/position.js';
+                document.head.appendChild(script);
             }
-        };
-
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", function () {
-                navigator.serviceWorker
-                    .register("js/serviceWorker.js")
-                    .then(res => console.log("service worker registered"))
-                    .catch(err => console.log("service worker not registered", err))
-            })
-        }
-
-        const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
-
-        if (isMobile) {
-            document.getElementById('map').style.height = "60vh";
-            var script = document.createElement('script');
-            script.src = 'js/position.js';
-            document.head.appendChild(script);
-        }
-        else {
-            // If not mobile, hide the camera button
-            document.getElementById('camera-button').style.display = 'none';
-            document.getElementById('map').style.height = "80vh";
-        }
+            else {
+                // If not mobile, hide the camera button
+                document.getElementById('camera-button').style.display = 'none';
+                document.getElementById('map').style.height = "80vh";
+            }
     </script>
 
     <script src="js/map.js"></script>
 
     <script>
-        function setMap(latitude, longitude) {
-            map = map.setView([latitude, longitude], 17);
-        }
-
-        if (isMobile) {
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    setMap(position.coords.latitude, position.coords.longitude);
-                }, error => {
-                    alert("Need permission to use your location in order to use your camera");
-                });
+            function setMap(latitude, longitude) {
+                map = map.setView([latitude, longitude], 17);
             }
-            else {
-                alert("Geolocation services are not supported by your browser.\n\
+
+            if (isMobile) {
+                if ("geolocation" in navigator) {
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        setMap(position.coords.latitude, position.coords.longitude);
+                    }, error => {
+                        alert("Need permission to use your location in order to use your camera");
+                    });
+                }
+                else {
+                    alert("Geolocation services are not supported by your browser.\n\
                     You can not use the camera on this app")
+                }
             }
-        }
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
 
-        // Example spot with updated coordinates, larger popup, a button, and a dropdown list
-        var ledomeVegetal = L.marker([49.18171143760297, -0.34688136578783596]).addTo(map);
-        ledomeVegetal.bindPopup(
-            "<div class='popup-content'>" +
-            "<b>Le Dôme Végétalisé</b><br>" +
-            "Caractéristiques (proba): A, B, C<br>" +
-            '<img src="images/ledome_vegetal.png" alt="Le Dôme Végétal Image" style="width:100%; height:auto;">' +
-            "</div>" +
-            '<div id="gallery-container">' +
-            '<img id="current-image" src="./images/ledome_vegetal.png" alt="Gallery Image" width="100%">' +
-            '<button id="next-button" onclick ="swapImages()">Next</button>' +
-            '<br><button onclick="onButtonClick()">Voter pour</button>' +
-            '<br><label for="dropdown">Choose an option:</label>' +
-            '<select id="dropdown">' +
-            '<option value="option1">Chaleur</option>' +
-            '<option value="option2">Inondation</option>' +
-            '<option value="option3">Air</option>' +
-            '</select>' +
-            '</div>'
-        );
+            // Example spot with updated coordinates, larger popup, a button, and a dropdown list
+            var ledomeVegetal = L.marker([49.18171143760297, -0.34688136578783596]).addTo(map);
+            ledomeVegetal.bindPopup(
+                "<div class='popup-content'>" +
+                "<b>Le Dôme Végétalisé</b><br>" +
+                "Caractéristiques (proba): A, B, C<br>" +
+                '<img src="images/ledome_vegetal.png" alt="Le Dôme Végétal Image" style="width:100%; height:auto;">' +
+                "</div>" +
+                '<div id="gallery-container">' +
+                '<img id="current-image" src="./images/ledome_vegetal.png" alt="Gallery Image" width="100%">' +
+                '<button id="next-button" onclick ="swapImages()">Next</button>' +
+                '<br><button onclick="onButtonClick()">Voter pour</button>' +
+                '<br><label for="dropdown">Choose an option:</label>' +
+                '<select id="dropdown">' +
+                '<option value="option1">Chaleur</option>' +
+                '<option value="option2">Inondation</option>' +
+                '<option value="option3">Air</option>' +
+                '</select>' +
+                '</div>'
+            );
 
-        // Function to handle button click
-        function onButtonClick() {
-            var dropdownValue = document.getElementById('dropdown').value;
-            alert("Button clicked! Dropdown selected value: " + dropdownValue);
-        }
+            // Function to handle button click
+            function onButtonClick() {
+                var dropdownValue = document.getElementById('dropdown').value;
+                alert("Button clicked! Dropdown selected value: " + dropdownValue);
+            }
 
-        // Example side panel
-        var spotInfo = document.getElementById('spot-info');
+            // Example side panel
+            var spotInfo = document.getElementById('spot-info');
 
-        map.on('click', function (e) {
-            var clickedLatLng = e.latlng;
-            var clickedCoordinates = "Latitude: " + clickedLatLng.lat.toFixed(6) + "<br>Longitude: " + clickedLatLng.lng.toFixed(6);
+            map.on('click', function (e) {
+                var clickedLatLng = e.latlng;
+                var clickedCoordinates = "Latitude: " + clickedLatLng.lat.toFixed(6) + "<br>Longitude: " + clickedLatLng.lng.toFixed(6);
 
-            // Display clicked coordinates in the side panel
-            spotInfo.innerHTML = "<div class='popup-content'><b>Clicked Point</b><br>" + clickedCoordinates + "</div>";
-        });
+                // Display clicked coordinates in the side panel
+                spotInfo.innerHTML = "<div class='popup-content'><b>Clicked Point</b><br>" + clickedCoordinates + "</div>";
+            });
     </script>
 
     <script src="js/pin.js"></script>
