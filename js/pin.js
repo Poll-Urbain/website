@@ -19,22 +19,17 @@
 // }
 
 const imageFolder = './images/test/';
-const pathJson = 'https://intensif08.ecole.ensicaen.fr';
+const nbImages = 3;
 const currentImage = document.getElementById('current-image');
 const prevButton = document.getElementById('prev-button');
 const nextButton = document.getElementById('next-button');
 
-function getNumberElements(r) {
-    return fetch(r).then(r => r.json());
-}
-
 function swapImages() {
-    const images = getNumberElements(imageFolder + 'list.json')
     const currentImage = document.getElementById('current-image');
-    for (var i = 0; i < images.length; i++) {
+    for (var i = 0; i <= nbImages; i++) {
         if (currentImage.src.match(imageFolder + i + ".png")) {
             console.log(currentImage.src);
-            if (i + 1 < images.length) {
+            if (i + 1 <= nbImages) {
                 currentImage.src = imageFolder + (i + 1) + ".png";
                 break;
             } else {
