@@ -68,8 +68,6 @@
 
     <script src="js/map.js"></script>
 
-    <script src="js/pin.js"></script>
-
     <script>
         var map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates;
 
@@ -104,7 +102,7 @@
             '<img src="images/ledome_vegetal.png" alt="Le Dôme Végétal Image" style="width:100%; height:auto;">' +
             "</div>" +
             '<div id="gallery-container">' +
-            '<img id="current-image" src="images/ledome_vegetal.png" alt="Gallery Image" width="100%">' +
+            '<img id="current-image" src="./images/ledome_vegetal.png" alt="Gallery Image" width="100%">' +
             '<button id="next-button" onclick ="swapImages()">Next</button>' +
             '<br><button onclick="onButtonClick()">Voter pour</button>' +
             '<br><label for="dropdown">Choose an option:</label>' +
@@ -133,6 +131,8 @@
             spotInfo.innerHTML = "<div class='popup-content'><b>Clicked Point</b><br>" + clickedCoordinates + "</div>";
         });
     </script>
+
+    <script src="js/pin.js"></script>
 </body>
 
 </html>
