@@ -32,15 +32,14 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> 
 
   <script>
-   
-  window.onload = async function() {
-    try {
-      var Sites = await readSitesFromJSON("projects");
-      console.log(Sites);
-    } catch (error) {
-      console.error("Error loading sites:", error);
-    }
-  };
+    var Sites;
+    window.onload = async function() {
+      try {
+        Sites = await readSitesFromJSON("projects");
+      } catch (error) {
+        console.error("Error loading sites:", error);
+      }
+    };
 
     var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates
     var marker = []
@@ -76,7 +75,7 @@
     // Function to geocode the entered address and display coordinates from text field
     function geocodeAddress() {
       var addressInput = document.getElementById('address-input').value;
-
+      console.log(addressInput);
       // Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
       var apiKey = 'a5d1c0cbcabb4a1a8f506c8415d80cb3';
       var geocodeUrl = 'https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(addressInput) + '&key=' + apiKey;

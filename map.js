@@ -39,7 +39,9 @@ class User {
 
   // Async method to initialize the coordinates
   init() {
+    console.log(this.address);
     return geocodeAddress(this.address).then(coords => {
+      console.log("====================" + coords)
       this.coordinates = coords;
     });
   }
