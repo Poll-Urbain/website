@@ -114,7 +114,6 @@
         var Sites;
         window.onload = async function () {
             try {
-                console.log("Loading sites...");
                 Sites = await readSitesFromJSON("projects");
                 console.log(Sites[0].name);
                 addPins(Sites);
