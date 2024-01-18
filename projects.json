@@ -7,12 +7,12 @@
           "latitude": 49.18188817086146, 
           "longitude": -0.3469949746295181
         },
-        "photo_name": "ledome_vegetal.jpg",
-        "characteristics": {
-          "+5°C en été" : 0,
-          "Zone inondable" : 0,
-          "Risque d'invasion de nuisible" : 0
-        }
+        "photo_name": "ledome_vegetal.png",
+        "characteristics": [
+          "+5°C en été",
+          "Zone inondable",
+          "Risque d'invasion de nuisible"
+        ]
       },
       {
         "name": "CHU Caen Normandie",
@@ -22,11 +22,50 @@
           "longitude": -0.35597076113495285
         },
         "photo_name": "chu.jpg",
-        "characteristics": {
-          "+5°C en été" : 0,
-          "Zone inondable" : 0,
-          "Risque d'invasion de nuisible" : 0
-        }
+        "characteristics": [
+            "+7°C en été",
+            "Zone inondable",
+            "Risque d'invasion de nuisible"
+        ]
+      },
+      {
+        "name": "Campus 2",
+        "address": "6 Boulevard Maréchal Juin, 14000 Caen",
+        "coordinates": {
+          "latitude": 49.21385508185299,
+          "longitude": -0.3679271065414772
+        },
+        "photo_name": "campus2.jpg",
+        "characteristics": [
+          "+4°C en été",
+          "Risque d'invasion de nuisible"
+        ]
+      },
+      {
+        "name": "Campus 4",
+        "address": "17 Rue Claude Bloch, 14000 Caen",
+        "coordinates": {
+          "latitude": 49.20926833500614, 
+          "longitude": -0.35813914817483555
+        },
+        "photo_name": "campus4.jpg",
+        "characteristics": [
+          "+6°C en été",
+          "Risque d'invasion de nuisible"
+        ]
+      },
+      {
+        "name": "Campus 1",
+        "address": "Université de Caen Normandie, Esp. de la Paix, 14000 Caen",
+        "coordinates": {
+          "latitude": 49.190046256884315, 
+          "longitude": -0.3643086532775109
+        },
+        "photo_name": "campus1.jpg",
+        "characteristics": [
+          "+5°C en été",
+          "Risque d'invasion de nuisible"
+        ]
       }
     ]
   }

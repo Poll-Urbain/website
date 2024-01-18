@@ -55,43 +55,46 @@
     var marker = []
     var i = 0;
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
-    fetch('projects.json')
-      .then(response => response.json())
-      .then(jsonData => {
-        // Iterating through projects
-        jsonData.projects.forEach(project => {
-          marker[i] = L.marker([project.coordinates.latitude, project.coordinates.longitude]).addTo(map);
-          htmlPopup = "<div class='popup-content'>" +
-        "<b>"+project.name +"</b><br>" +
-        "Caractéristiques (proba):"+ project.characteristics+"<br>" +
-        '<div><img src="images/'+project.photo_name+'" alt="'+ project.name +'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
-        '<br><button onclick="onButtonClick()">Voter pour</button>' +
-        '<br><label for="dropdown">Choose an option:</label>' +
-        '<select id="dropdown">' +
-          '<option value="Chaleur">Chaleur</option>' +
-          '<option value="Inondation">Inondation</option>' +
-          '<option value="Air">Air</option>' +
-        '</select>' +
-        "</div>";
 
-          marker[i].bindPopup(htmlPopup);
-          
-          console.log("Project Name: " + project.name);
-          console.log("Address: " + project.address);
-          console.log("Coordinates: " + project.coordinates.latitude + ", " + project.coordinates.longitude);
-          console.log("Score: " + project.score);
-          console.log("Photo Name: " + project.photo_name);
-          console.log("Characteristics: " + project.characteristics.join(", "));
-          console.log("\n");
-          i++;
-        });
-      })
-      .catch(error => console.error('Error fetching JSON:', error));
-    
+function addPins(sites){
+
+  for (let i = 0; i < sites.length; i++){
+      console.log(sites[i]);
+      marker[i] = L.marker([sites[i].coordinates.latitude, sites[i].coordinates.longitude]).addTo(map);
+      console.log('MARKER');
+      htmlPopup = "<div class='popup-content'>" +
+    "<b>"+sites[i].name +"</b><br>" +
+    "Caractéristiques (proba):"+ sites[i].characteristics+"<br>" +
+    '<div><img src="images/'+sites[i].photo_name+'" alt="'+ sites[i].name +'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
+    '<br><button onclick="onButtonClick()">Voter pour</button>' +
+    '<br><label for="dropdown">Choose an option:</label>' +
+    '<select id="dropdown">' +
+      '<option value="Chaleur">Chaleur</option>' +
+      '<option value="Inondation">Inondation</option>' +
+      '<option value="Air">Air</option>' +
+    '</select>' +
+    "</div>";
+    console.log('1');
+    marker[i].bindPopup(htmlPopup);
+    console.log('2');
+
+    }
+    // Or perform any other operations based on your requirements
+}
+
+  window.onload = async function() {
+      try {
+        Sites = await readSitesFromJSON("projects");
+        console.log(Sites[0].name);
+        addPins(Sites);
+      } catch (error) {
+        console.error("Error loading sites:", error);
+      }
+  };
 
     // Function to handle button click
     function onButtonClick() {
@@ -126,8 +129,6 @@
         });
     }
 
-    
-
     // Example side panel
     var spotInfo = document.getElementById('spot-info');
 
@@ -139,6 +140,11 @@
       spotInfo.innerHTML = "<div class='popup-content'><b>Clicked Point</b><br>" + clickedCoordinates + "</div>";
     });
   </script>
+  <div id="image-container">
+    <!-- Images will be dynamically loaded here -->
+</div>
+<script src="rank.js"></script>
+
 
 </body>
 </html>
