@@ -1,81 +1,88 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
 
 :root {
-    --main-bg-color: #1e1e1e;
-    --input-bg-color: #2c2c2c;
-    --body-color: #f8f8f8;
-    --accent-color: #0f94c5;
+    --main-bg-color: #f4f4f4; /* Light gray background */
+    --input-bg-color: #ffffff; /* White input fields */
+    --body-color: #333333; /* Dark text for better readability */
+    --accent-color: #007bff; /* A modern blue for accents */
 }
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: 'Roboto Mono', monospace;
+    font-family: 'Roboto', sans-serif; /* Switch to Roboto for a modern look */
     background-color: var(--main-bg-color);
     color: var(--body-color);
-    margin: 0;
-    padding: 0;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    padding: 20px;
 }
 
 form {
     max-width: 400px;
+    width: 100%;
     background-color: var(--input-bg-color);
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
-    margin: 10px;
+    border-radius: 8px; /* Rounded corners for a softer look */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin: 0 auto;
 }
 
 h2 {
     text-align: center;
-    font-size: 28px;
+    font-size: 24px; /* Slightly smaller for a more refined look */
     margin-bottom: 30px;
+    font-weight: 500; /* Medium font weight for the title */
 }
 
 p {
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Reduced margin for a tighter layout */
 }
 
 input {
     width: 100%;
-    padding: 10px;
-    background-color: var(--main-bg-color);
+    padding: 12px;
+    background-color: var(--input-bg-color);
     color: var(--body-color);
-    border: none;
-    border-radius: 5px;
+    border: 1px solid #ddd; /* Subtle border for inputs */
+    border-radius: 4px; /* Consistent rounded corners */
+    font-size: 14px; /* Standard font size for readability */
 }
 
 label {
     display: block;
     font-size: 14px;
-    margin-bottom: 5px;
+    margin-bottom: 8px; /* Adjusted spacing */
 }
 
 input[type="submit"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     font-size: 16px;
     background-color: var(--accent-color);
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
+    font-weight: 500; /* Medium weight for the button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
 input[type="submit"]:hover {
-    background-color: #ff6090;
+    background-color: #0056b3; /* Darker shade of blue for hover */
 }
 
 span {
-    color: #ff0000;
+    color: #e63946; /* A brighter red for error messages */
     font-size: 12px;
     display: none;
+    margin-top: 5px;
 }
 
 p:last-of-type {
