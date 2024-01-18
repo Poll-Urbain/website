@@ -1,4 +1,4 @@
-{
+{ 
     "projects": [
       {
         "name": "Le Dôme",
@@ -10,7 +10,7 @@
         "score": 8.7,
         "photo_name": "ledome_vegetal.png",
         "characteristics": [
-          "+35°C en été",
+          "+5°C en été",
           "Zone inondable",
           "Risque d'invasion de nuisible"
         ]
@@ -25,9 +25,51 @@
         "score": 9.2,
         "photo_name": "chu.jpg",
         "characteristics": [
-            "+35°C en été",
+            "+7°C en été",
             "Zone inondable",
             "Risque d'invasion de nuisible"
+        ]
+      },
+      {
+        "name": "Campus 2",
+        "address": "6 Boulevard Maréchal Juin, 14000 Caen",
+        "coordinates": {
+          "latitude": 49.21385508185299,
+          "longitude": -0.3679271065414772
+        },
+        "score": 5.4,
+        "photo_name": "campus2.jpg",
+        "characteristics": [
+          "+4°C en été",
+          "Risque d'invasion de nuisible"
+        ]
+      },
+      {
+        "name": "Campus 4",
+        "address": "17 Rue Claude Bloch, 14000 Caen",
+        "coordinates": {
+          "latitude": 49.20926833500614, 
+          "longitude": -0.35813914817483555
+        },
+        "score": 7.8,
+        "photo_name": "campus4.jpg",
+        "characteristics": [
+          "+6°C en été",
+          "Risque d'invasion de nuisible"
+        ]
+      },
+      {
+        "name": "Campus 1",
+        "address": "Université de Caen Normandie, Esp. de la Paix, 14000 Caen",
+        "coordinates": {
+          "latitude": 49.190046256884315, 
+          "longitude": -0.3643086532775109
+        },
+        "score": 4.3,
+        "photo_name": "campus1.jpg",
+        "characteristics": [
+          "+5°C en été",
+          "Risque d'invasion de nuisible"
         ]
       }
     ]
