@@ -76,7 +76,7 @@
                 htmlPopup = "<div class='popup-content'>" +
                     "<b>" + sites[i].name + "</b><br>" +
                     "Caractéristiques (proba):" + sites[i].characteristics + "<br>" +
-                    '<div><img src="images/' + sites[i].photo_name + '" onclick ="swapImages() alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
+                    '<div><img src="images/' + sites[i].photo_name + '" onclick ="swapImages()" alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
                     '<br><button onclick="onButtonClick()">Voter pour</button>' +
                     "</div>";
                 marker[i].bindPopup(htmlPopup);
