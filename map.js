@@ -17,7 +17,7 @@ class Site {
       this.coordinates = coordinates;
       this.imageName = null;
       this.score = null;
-      this.characteritics = new Array(); //disctionnary 
+      this.dict = {};
     }
 }
 
@@ -29,21 +29,34 @@ class Vote {
   }
 }
 
+// Function to geocode the entered address and display coordinates with parameters
+function geocodeAddress(address) {
+  // Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
+  var apiKey = 'a5d1c0cbcabb4a1a8f506c8415d80cb3';
+  var geocodeUrl = 'https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(address) + '&key=' + apiKey;
+
+  return fetch(geocodeUrl)
+    .then(response => response.json())
+    .then(data => {
+      if (data.results.length > 0) {
+        return data.results[0].geometry; // return the coordinates
+      } else {
+        throw new Error("Geocoding failed. Please enter a valid address.");
+      }
+    });
+}
+
 class User {
   constructor(name, address) {
     this.name = name;
     this.address = address;
     this.coordinates = null;
-    this.init()
   }
 
-  // Async method to initialize the coordinates
-  init() {
-    console.log(this.address);
-    return geocodeAddress(this.address).then(coords => {
-      console.log("====================" + coords)
-      this.coordinates = coords;
-    });
+  async fetchCoordinates() {
+    const coords = await geocodeAddress(this.address);
+    this.coordinates = coords;
+    return coords;
   }
 }
 
@@ -51,13 +64,14 @@ function readSitesFromJSON(jsonName) {
   return fetch(jsonName + '.json')
       .then(response => response.json())
       .then(jsonData => {
-        user = new User("alan", "4 rue d'auge");
-        console.log(user.coordinates);
-        let sites = [];
-        for(let site of jsonData.projects){
-          sites.push(site);
-        }
-        return sites;
+        let user = new User("Alan", "4 rue d'auge");
+        return user.fetchCoordinates().then(() => {
+          let sites = [];
+          for (let site of jsonData.projects) {
+            sites.push(site);
+          }
+          return sites;
+        });
       });
 }
 
@@ -76,24 +90,6 @@ function computeVoteValue(vote) {
 
   d = distance(vote.site.coordinates, vote.user.coordinates)
   value = 1/d * vote.site.Nbp1/vote.site.Nbp; // TO change with dict
-}
-
-// Function to geocode the entered address and display coordinates with parameters
-function geocodeAddress(address) {
-
-  // Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
-  var apiKey = 'a5d1c0cbcabb4a1a8f506c8415d80cb3';
-  var geocodeUrl = 'https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(address) + '&key=' + apiKey;
-
-  return fetch(geocodeUrl)
-    .then(response => response.json())
-    .then(data => {
-      if (data.results.length > 0) {
-        return data.results[0].geometry; // return the coordinates
-      } else {
-        throw new Error("Geocoding failed. Please enter a valid address.");
-      }
-    });
 }
 
 

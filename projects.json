@@ -9,11 +9,11 @@
         },
         "score": 8.7,
         "photo_name": "ledome_vegetal.jpg",
-        "characteristics": [
-          "+5°C en été",
-          "Zone inondable",
-          "Risque d'invasion de nuisible"
-        ]
+        "characteristics": {
+          "+5°C en été" : 0,
+          "Zone inondable" : 0,
+          "Risque d'invasion de nuisible" : 0
+        }
       },
       {
         "name": "CHU Caen Normandie",
@@ -24,11 +24,11 @@
         },
         "score": 9.2,
         "photo_name": "chu.jpg",
-        "characteristics": [
-            "+7°C en été",
-            "Zone inondable",
-            "Risque d'invasion de nuisible"
-        ]
+        "characteristics": {
+          "+5°C en été" : 0,
+          "Zone inondable" : 0,
+          "Risque d'invasion de nuisible" : 0
+        }
       }
     ]
   }
