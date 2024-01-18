@@ -49,10 +49,12 @@
             document.head.appendChild(script);
         }
         var Sites;
+
         window.onload = async function () {
             try {
                 Sites = await readSitesFromJSON("projects");
-
+                console.log(Sites[0].name);
+                addPins(Sites);
             } catch (error) {
                 console.error("Error loading sites:", error);
             }
@@ -110,17 +112,6 @@
                 offset: [0, 0]
             });
         }
-
-        var Sites;
-        window.onload = async function () {
-            try {
-                Sites = await readSitesFromJSON("projects");
-                console.log(Sites[0].name);
-                addPins(Sites);
-            } catch (error) {
-                console.error("Error loading sites:", error);
-            }
-        };
 
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
