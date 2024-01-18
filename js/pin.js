@@ -31,7 +31,7 @@ function swapImages(id) {
         if ((imageFolder + Sites[i].photo_name) == currentImage.src) {
             for (var j = 1; j <= Sites[i].number_of_propositions; j++) {
                 var newPhotoName = Sites[i].photo_name.replace(".png", "_" + j + ".png");
-                currentImage.src = imageFolder + Sites[i].photos[j].photo_name;
+                currentImage.src = imageFolder + newPhotoName;
             }
         }
     }
