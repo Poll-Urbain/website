@@ -45,13 +45,7 @@ class User {
   }
 }
 
-var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates
-var marker = []
-var i = 0;
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-   }).addTo(map);
 
 
 function readSitesFromJSON(jsonName) {
@@ -59,8 +53,8 @@ function readSitesFromJSON(jsonName) {
       .then(response => response.json())
       .then(jsonData => {
   
-        user = new User("alan", "4 rue d'auge");
-        console.log(user.coordinates);
+        //user = new User("alan", "6 Boulevard Maréchal Juin, 14000 Caen" );
+        //console.log(user.coordinates);
         let sites = [];
         for(let site of jsonData.projects){
           sites.push(site);
@@ -68,7 +62,7 @@ function readSitesFromJSON(jsonName) {
         return sites;
       });
 }
-
+/*
 function addPins(sites){
     sites.forEach(project => {
         marker[i] = L.marker([project.coordinates.latitude, project.coordinates.longitude]).addTo(map);
@@ -87,7 +81,7 @@ function addPins(sites){
 
         marker[i].bindPopup(htmlPopup);
         
-        console.log("Project Name: " + project.name);
+        /*console.log("Project Name: " + project.name);
         console.log("Address: " + project.address);
         console.log("Coordinates: " + project.coordinates.latitude + ", " + project.coordinates.longitude);
         console.log("Score: " + project.score);
@@ -96,7 +90,7 @@ function addPins(sites){
         console.log("\n");
         i++;
       });
-}
+}*/
 
 function distance(coord1, coord2) {
   const r = 6371e3; // meter
@@ -133,7 +127,6 @@ function geocodeAddress(address) {
     });
 }
 
-addPins(readSitesFromJSON('projects'));
 
 /*
 function distance(coord1, coord2) {
