@@ -73,12 +73,14 @@
             for (let i = 0; i < sites.length; i++) {
                 marker[i] = L.marker([sites[i].coordinates.latitude, sites[i].coordinates.longitude]).addTo(map);
 
+                var newPhotoName = sites[i].photo_name.replace(".png", "_1.png");
+
                 htmlPopup = "<div class='popup-content'>" +
                     "<b>" + sites[i].name + "</b><br>" +
                     "Caractéristiques (proba):" + sites[i].characteristics + "<br>" +
                     '<img src="images/' + sites[i].photo_name + '" alt="' + sites[i].name + '" style="width:100%; height:auto;">' +
                     "</div>" +
-                    '<div><img id=' + sites[i].photo_name + ' src="images/' + sites[i].photo_name + '" alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
+                    '<div><img id=' + sites[i].photo_name + ' src="images/' + newPhotoName + '" alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
                     '<button id="next-button" onclick ="swapImages(\'' + sites[i].photo_name + '\')">Next</button>' +
                     '<br><button onclick="onButtonClick()">Voter pour</button>' +
                     "</div>";
@@ -161,42 +163,31 @@
         }).addTo(map);
 
         // Example spot with updated coordinates, larger popup, a button, and a dropdown list
-        var ledomeVegetal = L.marker([49.18171143760297, -0.34688136578783596]).addTo(map);
-        ledomeVegetal.bindPopup(
-            "<div class='popup-content'>" +
-            "<b>Le Dôme Végétalisé</b><br>" +
-            "Caractéristiques (proba): A, B, C<br>" +
-            '<img src="images/ledome_vegetal.png" alt="Le Dôme Végétal Image" style="width:100%; height:auto;">' +
-            "</div>" +
-            '<div id="gallery-container">' +
-            '<img id="current-image" src="./images/ledome_vegetal.png" alt="Gallery Image" width="100%">' +
-            '<button id="next-button" onclick ="swapImages()">Next</button>' +
-            '<br><button onclick="onButtonClick()">Voter pour</button>' +
-            '<br><label for="dropdown">Choose an option:</label>' +
-            '<select id="dropdown">' +
-            '<option value="option1">Chaleur</option>' +
-            '<option value="option2">Inondation</option>' +
-            '<option value="option3">Air</option>' +
-            '</select>' +
-            '</div>'
-        );
+        // var ledomeVegetal = L.marker([49.18171143760297, -0.34688136578783596]).addTo(map);
+        // ledomeVegetal.bindPopup(
+        //     "<div class='popup-content'>" +
+        //     "<b>Le Dôme Végétalisé</b><br>" +
+        //     "Caractéristiques (proba): A, B, C<br>" +
+        //     '<img src="images/ledome_vegetal.png" alt="Le Dôme Végétal Image" style="width:100%; height:auto;">' +
+        //     "</div>" +
+        //     '<div id="gallery-container">' +
+        //     '<img id="current-image" src="./images/ledome_vegetal.png" alt="Gallery Image" width="100%">' +
+        //     '<button id="next-button" onclick ="swapImages()">Next</button>' +
+        //     '<br><button onclick="onButtonClick()">Voter pour</button>' +
+        //     '<br><label for="dropdown">Choose an option:</label>' +
+        //     '<select id="dropdown">' +
+        //     '<option value="option1">Chaleur</option>' +
+        //     '<option value="option2">Inondation</option>' +
+        //     '<option value="option3">Air</option>' +
+        //     '</select>' +
+        //     '</div>'
+        // );
 
         // Function to handle button click
         function onButtonClick() {
             var dropdownValue = document.getElementById('dropdown').value;
             alert("Button clicked! Dropdown selected value: " + dropdownValue);
         }
-
-        // Example side panel
-        var spotInfo = document.getElementById('spot-info');
-
-        map.on('click', function (e) {
-            var clickedLatLng = e.latlng;
-            var clickedCoordinates = "Latitude: " + clickedLatLng.lat.toFixed(6) + "<br>Longitude: " + clickedLatLng.lng.toFixed(6);
-
-            // Display clicked coordinates in the side panel
-            spotInfo.innerHTML = "<div class='popup-content'><b>Clicked Point</b><br>" + clickedCoordinates + "</div>";
-        });
     </script>
 
     <script src="js/pin.js"></script>

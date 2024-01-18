@@ -1,72 +1,76 @@
-{ 
-    "projects": [
-      {
-        "name": "Le Dôme",
-        "address": "3 Esp. Stéphane Hessel, 14000 Caen",
-        "coordinates": {
-          "latitude": 49.18188817086146, 
-          "longitude": -0.3469949746295181
-        },
-        "photo_name": "ledome_vegetal.png",
-        "characteristics": [
-          "+5°C en été",
-          "Zone inondable",
-          "Risque d'invasion de nuisible"
-        ]
+{
+  "projects": [
+    {
+      "name": "Le Dôme",
+      "address": "3 Esp. Stéphane Hessel, 14000 Caen",
+      "coordinates": {
+        "latitude": 49.18188817086146,
+        "longitude": -0.3469949746295181
       },
-      {
-        "name": "CHU Caen Normandie",
-        "address": "Av. de la Côte de Nacre CS 30001, 14000 Caen",
-        "coordinates": {
-          "latitude": 49.20572086421334, 
-          "longitude": -0.35597076113495285
-        },
-        "photo_name": "chu.jpg",
-        "characteristics": [
-            "+7°C en été",
-            "Zone inondable",
-            "Risque d'invasion de nuisible"
-        ]
+      "photo_name": "ledome/ledome.png",
+      "number_of_propositions": 3,
+      "characteristics": [
+        "+5°C en été",
+        "Zone inondable",
+        "Risque d'invasion de nuisible"
+      ]
+    },
+    {
+      "name": "CHU Caen Normandie",
+      "address": "Av. de la Côte de Nacre CS 30001, 14000 Caen",
+      "coordinates": {
+        "latitude": 49.20572086421334,
+        "longitude": -0.35597076113495285
       },
-      {
-        "name": "Campus 2",
-        "address": "6 Boulevard Maréchal Juin, 14000 Caen",
-        "coordinates": {
-          "latitude": 49.21385508185299,
-          "longitude": -0.3679271065414772
-        },
-        "photo_name": "campus2.jpg",
-        "characteristics": [
-          "+4°C en été",
-          "Risque d'invasion de nuisible"
-        ]
+      "photo_name": "chu/chu.png",
+      "number_of_propositions": 4,
+      "characteristics": [
+        "+7°C en été",
+        "Zone inondable",
+        "Risque d'invasion de nuisible"
+      ]
+    },
+    {
+      "name": "Campus 2",
+      "address": "6 Boulevard Maréchal Juin, 14000 Caen",
+      "coordinates": {
+        "latitude": 49.21385508185299,
+        "longitude": -0.3679271065414772
       },
-      {
-        "name": "Campus 4",
-        "address": "17 Rue Claude Bloch, 14000 Caen",
-        "coordinates": {
-          "latitude": 49.20926833500614, 
-          "longitude": -0.35813914817483555
-        },
-        "photo_name": "campus4.jpg",
-        "characteristics": [
-          "+6°C en été",
-          "Risque d'invasion de nuisible"
-        ]
+      "photo_name": "campus2/campus2.png",
+      "number_of_propositions": 3,
+      "characteristics": [
+        "+4°C en été",
+        "Risque d'invasion de nuisible"
+      ]
+    },
+    {
+      "name": "Campus 4",
+      "address": "17 Rue Claude Bloch, 14000 Caen",
+      "coordinates": {
+        "latitude": 49.20926833500614,
+        "longitude": -0.35813914817483555
       },
-      {
-        "name": "Campus 1",
-        "address": "Université de Caen Normandie, Esp. de la Paix, 14000 Caen",
-        "coordinates": {
-          "latitude": 49.190046256884315, 
-          "longitude": -0.3643086532775109
-        },
-        "photo_name": "campus1.jpg",
-        "characteristics": [
-          "+5°C en été",
-          "Risque d'invasion de nuisible"
-        ]
-      }
-    ]
-  }
-  
+      "photo_name": "campus4/campus4.png",
+      "number_of_propositions": 3,
+      "characteristics": [
+        "+6°C en été",
+        "Risque d'invasion de nuisible"
+      ]
+    },
+    {
+      "name": "Campus 1",
+      "address": "Université de Caen Normandie, Esp. de la Paix, 14000 Caen",
+      "coordinates": {
+        "latitude": 49.190046256884315,
+        "longitude": -0.3643086532775109
+      },
+      "photo_name": "campus1/campus1.png",
+      "number_of_propositions": 3,
+      "characteristics": [
+        "+5°C en été",
+        "Risque d'invasion de nuisible"
+      ]
+    }
+  ]
+}

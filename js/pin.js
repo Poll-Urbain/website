@@ -27,17 +27,11 @@ const nextButton = document.getElementById('next-button');
 function swapImages(id) {
     const currentImage = document.getElementById(id);
     id = id.slice(1, -1);
-    console.log("id:" + id);
     for (var i = 0; i < Sites.length; i++) {
-        console.log(imageFolder + Sites[i].photo_name);
-        console.log(currentImage.src);
         if ((imageFolder + Sites[i].photo_name) == currentImage.src) {
-            if (i < Sites.length - 1) {
-                currentImage.src = imageFolder + Sites[i + 1].photo_name;
-                return;
-            }
-            else {
-                currentImage.src = imageFolder + Sites[0].photo_name;
+            for (var j = 1; j <= Sites[i].number_of_propositions; j++) {
+                var newPhotoName = Sites[i].photo_name.replace(".png", "_" + j + ".png");
+                currentImage.src = imageFolder + Sites[i].photos[j].photo_name;
             }
         }
     }
