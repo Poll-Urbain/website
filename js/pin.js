@@ -36,13 +36,9 @@ window.onload = async function () {
 };
 
 function swapImages() {
-    // for (i = 0; i < projects.length; i++) {
-    //     projects[i].photo_name
-    // }
     const currentImage = document.getElementById('current-image');
     console.log(projects.length);
     for (var i = 0; i < projects.length; i++) {
-        console.log(projects[i].photo_name);
         if (projects[i].photo_name == currentImage.src) {
             if (i < projects.length - 1) {
                 currentImage.src = projects[i + 1].photo_name;
