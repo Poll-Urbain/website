@@ -31,9 +31,7 @@ function swapImages(id) {
             continue;
         }
         var currentPosition = (currentImage.src).split(".png")[0].slice(-1);
-        console.log(currentPosition);
         var newPhotoName = (currentImage.src).split(".png")[0].slice(0, -1) + ((parseInt(currentPosition)) % (Sites[i].number_of_propositions) + 1) + ".png";
-        console.log(newPhotoName);
         currentImage.src = newPhotoName;
     }
 }
