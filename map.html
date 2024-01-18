@@ -38,9 +38,14 @@
     <input type="text" id="address-input" placeholder="Enter address">
     <button onclick="geocodeAddressFromTextField()">Show Coordinates</button>
   </div>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> 
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <script>
+    function loadRankScript() {
+        var script = document.createElement('script');
+        script.src = 'rank.js';
+        document.head.appendChild(script);
+    }
     var Sites;
     window.onload = async function() {
       try {
@@ -78,7 +83,31 @@ function addPins(sites){
         "</div>";
       marker[i].bindPopup(htmlPopup);
     }
-    // Or perform any other operations based on your requirements
+    // Add a zone marker
+    var zone = L.marker([49.211029, -0.363451]).addTo(map);
+
+    zone.on('click', function () {
+      loadRankScript();
+    });
+
+    zone.bindPopup(
+            '<div id="image-container" class="image-container">' +
+            "<b>Classement des préférences des votes</b><br>" +
+            "<br>" +
+            '</div>'
+    );
+
+    zone.setIcon(L.icon({
+      iconUrl: 'images/icons/zone.png',
+      iconSize: [30, 50],
+      iconAnchor: [25, 50],
+      popupAnchor: [0, -50]
+    }));
+    zone.bindTooltip("Côte de nacre", {
+      permanent: true,
+      direction: 'right',
+      offset: [0, 0]
+    });
 }
 
   window.onload = async function() {
@@ -135,11 +164,6 @@ function addPins(sites){
       spotInfo.innerHTML = "<div class='popup-content'><b>Clicked Point</b><br>" + clickedCoordinates + "</div>";
     });
   </script>
-  <div id="image-container">
-    <!-- Images will be dynamically loaded here -->
-</div>
-<script src="rank.js"></script>
-
 
 </body>
 </html>

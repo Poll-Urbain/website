@@ -1,17 +1,41 @@
-const imageContainer = document.getElementById('image-container');
-
-// Fetch images from the server or use a predefined array
-const images = ['campus1.jpg', 'campus2.jpg', 'campus4.jpg'];
+var imageContainer = document.getElementById('image-container');
+var images = ['campus1.jpg', 'campus2.jpg', 'campus4.jpg'];
+var draggedItem = null;
 
 // Dynamically load images into the container
 images.forEach(image => {
+    const voteElement = document.createElement('div');
     const imgElement = document.createElement('img');
     imgElement.src = "images/"+image;
-    imageContainer.appendChild(imgElement);
+    imgElement.style = "width: 100%; height: auto;";
+    const caracteristics = document.createElement('div');
+    const caracteristic1 = document.createElement('div');
+    const caracteristic2 = document.createElement('div');
+    const caracteristic3 = document.createElement('div');
+    voteElement.appendChild(imgElement);
+    caracteristic1.innerHTML = "Chaleur   <select id=\"dropdown\">" +
+        "<option value=\"1\">Rank 1</option>" +
+        "<option value=\"2\">Rank 2</option>" +
+        "<option value=\"3\">Rank 3</option>" +
+        "</select>";
+    caracteristic2.innerHTML = "Inondation   <select id=\"dropdown\">" +
+        "<option value=\"1\">Rank 1</option>" +
+        "<option value=\"2\">Rank 2</option>" +
+        "<option value=\"3\">Rank 3</option>" +
+        "</select>";
+    caracteristic3.innerHTML = "Air   <select id=\"dropdown\">" +
+        "<option value=\"1\">Rank 1</option>" +
+        "<option value=\"2\">Rank 2</option>" +
+        "<option value=\"3\">Rank 3</option>" +
+        "</select>";
+    caracteristics.appendChild(caracteristic1);
+    caracteristics.appendChild(caracteristic2);
+    caracteristics.appendChild(caracteristic3);
+    voteElement.appendChild(caracteristics);
+    imageContainer.appendChild(voteElement);
 });
 
 // Enable drag-and-drop functionality
-let draggedItem = null;
 
 imageContainer.addEventListener('dragstart', (e) => {
     draggedItem = e.target;
