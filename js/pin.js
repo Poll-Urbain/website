@@ -19,17 +19,37 @@
 // }
 
 const imageFolder = './images/test/';
-const nbImages = 3;
+const pathJson = 'https://intensif08.ecole.ensicaen.fr';
 const currentImage = document.getElementById('current-image');
 const prevButton = document.getElementById('prev-button');
 const nextButton = document.getElementById('next-button');
 
+function readSitesFromJSON(jsonName) {
+    return fetch(jsonName + '.json')
+        .then(response => response.json())
+        .then(jsonData => {
+            var userDataString = localStorage.getItem("userData");
+            var userData = JSON.parse(userDataString);
+            var userAddress = userData.address;
+            var userName = userData.name;
+            let user = new User(userName, userAddress);
+            return user.fetchCoordinates().then(() => {
+                let sites = [];
+                for (let site of jsonData.projects) {
+                    sites.push(site);
+                }
+                return sites;
+            });
+        });
+}
+
 function swapImages() {
+    const images = readSitesFromJSON('list.json')
     const currentImage = document.getElementById('current-image');
-    for (var i = 0; i <= nbImages; i++) {
+    for (var i = 0; i < images.length; i++) {
         if (currentImage.src.match(imageFolder + i + ".png")) {
             console.log(currentImage.src);
-            if (i + 1 <= nbImages) {
+            if (i + 1 < images.length) {
                 currentImage.src = imageFolder + (i + 1) + ".png";
                 break;
             } else {
