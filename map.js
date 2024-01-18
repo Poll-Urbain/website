@@ -64,8 +64,10 @@ function readSitesFromJSON(jsonName) {
   return fetch(jsonName + '.json')
       .then(response => response.json())
       .then(jsonData => {
-        let user = new User("Alan", "4 rue d'auge");
+        var userAddress = localStorage.getItem("userData")["address"];
+        let user = new User("Alan", userAddress);
         return user.fetchCoordinates().then(() => {
+          console.log(user.coordinates);
           let sites = [];
           for (let site of jsonData.projects) {
             sites.push(site);
