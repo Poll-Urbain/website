@@ -35,11 +35,9 @@ window.onload = async function () {
     }
 };
 
-currentImage.src = imageFolder + projects[0].photo_name;
 
 function swapImages() {
-    const currentImage = document.getElementById('current-image');
-    console.log(projects.length);
+    console.log(imageFolder + projects[0].photo_name);
     for (var i = 0; i < projects.length; i++) {
         console.log(projects[i].photo_name)
         if (projects[i].photo_name == currentImage.src) {
