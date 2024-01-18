@@ -26,11 +26,12 @@ const nextButton = document.getElementById('next-button');
 
 function swapImages(id) {
     const currentImage = document.getElementById(id);
-    id = id.slice(1, -1);
+    console.log(id);
     for (var i = 0; i < Sites.length; i++) {
-        if ((imageFolder + Sites[i].photo_name) == currentImage.src) {
-            for (var j = 1; j <= Sites[i].number_of_propositions; j++) {
-                var newPhotoName = Sites[i].photo_name.replace(".png", "_" + j + ".png");
+        for (var j = 1; j <= Sites[i].number_of_propositions; j++) {
+            if ((imageFolder + Sites[i].photo_name) == currentImage.src) {
+                var newPhotoName = Sites[i].photo_name.replace(".png", "_" + i + ".png");
+                console.log(newPhotoName);
                 currentImage.src = imageFolder + newPhotoName;
             }
         }
