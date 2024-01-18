@@ -1,4 +1,3 @@
-//import * as fs from 'fs';
 
 const R = 6371e3; // Earth radius metres
 
