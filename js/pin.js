@@ -27,8 +27,7 @@ const nextButton = document.getElementById('next-button');
 function swapImages(id) {
     const currentImage = document.getElementById(id);
     for (var i = 0; i < Sites.length; i++) {
-        console.log(imageFolder + Sites[i].photo_name + "     " + id);
-        if ((imageFolder + Sites[i].photo_name) != id) {
+        if ((Sites[i].photo_name) != id) {
             continue;
         }
         var currentPosition = (currentImage.src).split(".png")[0][-1];
