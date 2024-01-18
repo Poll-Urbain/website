@@ -43,7 +43,7 @@ function swapImages() {
         if ((imageFolder + projects[i].photo_name).localeCompare(currentImage.src)) {
             if (i < projects.length - 1) {
                 currentImage.src = imageFolder + projects[i + 1].photo_name;
-                break;
+                return;
             }
             else {
                 currentImage.src = imageFolder + projects[0].photo_name;
