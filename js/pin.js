@@ -44,7 +44,7 @@ function readSitesFromJSON(jsonName) {
 }
 
 function swapImages() {
-    const images = readSitesFromJSON('list.json')
+    const images = readSitesFromJSON('list')
     const currentImage = document.getElementById('current-image');
     for (var i = 0; i < images.length; i++) {
         if (currentImage.src.match(imageFolder + i + ".png")) {
