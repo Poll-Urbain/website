@@ -18,7 +18,7 @@
 
 // }
 
-const imageFolder = './images/';
+const imageFolder = 'https://intensif08.ecole.ensicaen.fr/images/';
 const pathJson = 'https://intensif08.ecole.ensicaen.fr';
 const prevButton = document.getElementById('prev-button');
 const nextButton = document.getElementById('next-button');
