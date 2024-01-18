@@ -54,7 +54,7 @@ function signUp() {
     localStorage.setItem('userData', JSON.stringify(userData));
 
     alert("Account created successfully!");
-    window.location.href = "../index.php";
+    window.location.href = "./map.html";
 }
 
 // Handle user log in
@@ -66,7 +66,7 @@ function logIn() {
     var storedData = JSON.parse(localStorage.getItem('userData'));
     if (storedData && username === storedData.username && password === storedData.password) {
         alert("Logged in successfully!");
-        window.location.href = "../index.php";
+        window.location.href = "./map.html";
     } else {
         $("#login_form span").show();
     }
