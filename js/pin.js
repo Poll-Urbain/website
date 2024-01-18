@@ -30,7 +30,6 @@ function swapImages(id) {
         console.log(imageFolder + Sites[i].photo_name);
         console.log(currentImage.src);
         if ((imageFolder + Sites[i].photo_name) == currentImage.src) {
-            console.log("found");
             if (i < Sites.length - 1) {
                 currentImage.src = imageFolder + Sites[i + 1].photo_name;
                 return;
