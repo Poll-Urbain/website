@@ -26,6 +26,7 @@ const nextButton = document.getElementById('next-button');
 
 function swapImages(id) {
     const currentImage = document.getElementById(id);
+    id = id.slice(1, -1);
     for (var i = 0; i < Sites.length; i++) {
         console.log(imageFolder + Sites[i].photo_name);
         console.log(currentImage.src);
