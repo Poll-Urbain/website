@@ -20,7 +20,6 @@
 
 const imageFolder = './images/';
 const pathJson = 'https://intensif08.ecole.ensicaen.fr';
-const currentImage = document.getElementById('current-image');
 const prevButton = document.getElementById('prev-button');
 const nextButton = document.getElementById('next-button');
 
@@ -37,6 +36,7 @@ window.onload = async function () {
 
 
 function swapImages() {
+    const currentImage = document.getElementById('current-image');
     console.log(imageFolder + projects[0].photo_name);
     for (var i = 0; i < projects.length; i++) {
         console.log(projects[i].photo_name)
