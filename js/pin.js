@@ -41,7 +41,7 @@ function swapImages() {
     const currentImage = document.getElementById('current-image');
     console.log(projects.length);
     for (var i = 0; i < projects.length; i++) {
-        console.log(projects[i])
+        console.log(projects[i].photo_name)
         if (projects[i].photo_name == currentImage.src) {
             if (i < projects.length - 1) {
                 currentImage.src = imageFolder + projects[i + 1].photo_name;
