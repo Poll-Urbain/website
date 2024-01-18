@@ -54,7 +54,7 @@ function signUp() {
     localStorage.setItem('userData', JSON.stringify(userData));
 
     alert("Account created successfully!");
-    window.location.href = "./map.html";
+    window.location.href = "./signup.html";
 }
 
 // Handle user log in
