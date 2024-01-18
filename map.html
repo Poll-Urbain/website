@@ -84,7 +84,6 @@ function addPins(sites){
   window.onload = async function() {
       try {
         Sites = await readSitesFromJSON("projects");
-        console.log(Sites[0].name);
         addPins(Sites);
       } catch (error) {
         console.error("Error loading sites:", error);

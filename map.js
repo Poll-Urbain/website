@@ -91,11 +91,9 @@ function readSitesFromJSON(jsonName) {
 function distance(coord1, coord2) {
   const r = 6371e3; // meter
   const p = Math.PI / 180;
-
   const a = 0.5 - Math.cos((coord2.lat - coord1.lat) * p) / 2
                 + Math.cos(coord1.lat * p) * Math.cos(coord2.lat * p) *
                   (1 - Math.cos((coord2.lon - coord1.lon) * p)) / 2;
-
   return 2 * r * Math.asin(Math.sqrt(a));
 }
 
