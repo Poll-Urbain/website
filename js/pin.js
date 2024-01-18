@@ -25,16 +25,18 @@ const prevButton = document.getElementById('prev-button');
 const nextButton = document.getElementById('next-button');
 
 function swapImages() {
-    const images = readSitesFromJSON('list');
+    const projects = readSitesFromJSON('projects');
+    for (i = 0; i < projects.length; i++) {
+        projects[i].photo_name
+    }
     const currentImage = document.getElementById('current-image');
-    for (var i = 0; i < images.length; i++) {
-        if (currentImage.src.match(imageFolder + i + ".png")) {
-            console.log(currentImage.src);
-            if (i + 1 < images.length) {
-                currentImage.src = imageFolder + (i + 1) + ".png";
-                break;
-            } else {
-                currentImage.src = imageFolder + "1.png";
+    for (var i = 0; i < projects.length; i++) {
+        if (projects[i].photo_name == currentImage.src) {
+            if (i < projects.length - 1) {
+                currentImage.src = projects[i + 1].photo_name;
+            }
+            else {
+                currentImage.src = projects[0].photo_name;
             }
         }
     }
