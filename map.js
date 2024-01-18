@@ -36,7 +36,7 @@ class Vote {
       totalVote += this.site.characteriticsVote[elm];
     }
   
-    value = 1/d * this.site.characteriticsVote[this.characteritic]/totalVote; 
+    value = 1/(d+1) * this.site.characteriticsVote[this.characteritic]/totalVote; 
 
     return value;
   }
