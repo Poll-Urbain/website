@@ -27,35 +27,15 @@ class Vote {
   }
 
   computeVoteValue() {
-  
     var totalVote;
     d = distance(this.site.coordinates, this.user.coordinates)
-    
     for(elm of this.site.characteriticsVote) {
       totalVote += this.site.characteriticsVote[elm];
     }
-  
-    value = 1/(d+1) * this.site.characteriticsVote[this.characteritic]/totalVote; 
+    value = 1/(d+1) * this.site.characteriticsVote[this.characteritic]/totalVote * computeWeight(rankBuilding) * computeWeight(rankProject); 
 
     return value;
   }
-}
-
-// Function to geocode the entered address and display coordinates with parameters
-function geocodeAddress(address) {
-  // Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
-  var apiKey = 'a5d1c0cbcabb4a1a8f506c8415d80cb3';
-  var geocodeUrl = 'https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(address) + '&key=' + apiKey;
-
-  return fetch(geocodeUrl)
-    .then(response => response.json())
-    .then(data => {
-      if (data.results.length > 0) {
-        return data.results[0].geometry; // return the coordinates
-      } else {
-        throw new Error("Geocoding failed. Please enter a valid address.");
-      }
-    });
 }
 
 // Function to geocode the entered address and display coordinates with parameters
@@ -135,8 +115,4 @@ function getCharacteristicList(k){ // Building number k of the zone
   return [0,2,1];
 }
 
-function computeVoteValue(vote, rankBuilding, rankProject) {
 
-  d = distance(vote.site.coordinates, vote.user.coordinates)
-  value = 1/d * computeWeight(rankBuilding) * computeWeight(rankProject); // TO change with dict
-}
