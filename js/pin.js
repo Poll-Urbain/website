@@ -23,31 +23,20 @@ const pathJson = 'https://intensif08.ecole.ensicaen.fr';
 const prevButton = document.getElementById('prev-button');
 const nextButton = document.getElementById('next-button');
 
-var projects = [];
-
-window.onload = async function () {
-    try {
-        projects = await readSitesFromJSON("projects");
-    }
-    catch (error) {
-        console.error("Error loading sites:", error);
-    }
-};
-
 
 function swapImages() {
     const currentImage = document.getElementById('current-image');
-    for (var i = 0; i < projects.length; i++) {
-        console.log(imageFolder + projects[i].photo_name);
+    for (var i = 0; i < Sites.length; i++) {
+        console.log(imageFolder + Sites[i].photo_name);
         console.log(currentImage.src);
-        if ((imageFolder + projects[i].photo_name) == currentImage.src) {
+        if ((imageFolder + Sites[i].photo_name) == currentImage.src) {
             console.log("found");
-            if (i < projects.length - 1) {
-                currentImage.src = imageFolder + projects[i + 1].photo_name;
+            if (i < Sites.length - 1) {
+                currentImage.src = imageFolder + Sites[i + 1].photo_name;
                 return;
             }
             else {
-                currentImage.src = imageFolder + projects[0].photo_name;
+                currentImage.src = imageFolder + Sites[0].photo_name;
             }
         }
     }
