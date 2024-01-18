@@ -24,11 +24,21 @@ const currentImage = document.getElementById('current-image');
 const prevButton = document.getElementById('prev-button');
 const nextButton = document.getElementById('next-button');
 
-function swapImages() {
-    const projects = readSitesFromJSON('projects');
-    for (i = 0; i < projects.length; i++) {
-        projects[i].photo_name
+var projects = [];
+
+window.onload = async function () {
+    try {
+        projects = await readSitesFromJSON("projects");
     }
+    catch (error) {
+        console.error("Error loading sites:", error);
+    }
+};
+
+function swapImages() {
+    // for (i = 0; i < projects.length; i++) {
+    //     projects[i].photo_name
+    // }
     const currentImage = document.getElementById('current-image');
     console.log(projects.length);
     for (var i = 0; i < projects.length; i++) {
