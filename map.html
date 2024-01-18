@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="map.css" />
     <link rel="icon" href="images/icons/favicon.ico" />
 
     <link rel="manifest" href="/manifest.json" />
@@ -74,6 +75,31 @@
         function setMap(latitude, longitude) {
             map = map.setView([latitude, longitude], 17);
         }
+        // Add a zone marker
+        var zone = L.marker([49.211029, -0.363451]).addTo(map);
+
+        zone.on('click', function () {
+            loadRankScript();
+        });
+
+        zone.bindPopup(
+            '<div id="image-container" class="image-container">' +
+            "<b>Classement des préférences des votes</b><br>" +
+            "<br>" +
+            '</div>'
+        );
+
+        zone.setIcon(L.icon({
+            iconUrl: 'images/icons/zone.png',
+            iconSize: [30, 50],
+            iconAnchor: [25, 50],
+            popupAnchor: [0, -50]
+        }));
+        zone.bindTooltip("Côte de nacre", {
+            permanent: true,
+            direction: 'right',
+            offset: [0, 0]
+        });
 
         if (isMobile) {
             if ("geolocation" in navigator) {
