@@ -30,11 +30,10 @@ function swapImages(id) {
         if ((Sites[i].photo_name) != id) {
             continue;
         }
-        var currentPosition = (currentImage.src).split(".png")[0];
+        var currentPosition = (currentImage.src).split(".png")[0].slice(-1);
         console.log(currentPosition);
-        if ((imageFolder + Sites[i].photo_name) == currentImage.src) {
-            console.log(newPhotoName);
-            currentImage.src = imageFolder + newPhotoName;
-        }
+        var newPhotoName = (currentImage.src).split(".png")[0].slice(0, -2) + (parseInt(currentPosition) + 1) % Sites[i].number_of_propositions + ".png";
+        console.log(newPhotoName);
+        currentImage.src = newPhotoName;
     }
 }
