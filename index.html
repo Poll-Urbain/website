@@ -68,6 +68,9 @@
             document.getElementById('map').style.height = "80vh";
         }
     </script>
+
+    <script src="js/pin.js"></script>
+
     <script>
         var map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates;
 
@@ -96,18 +99,22 @@
         // Example spot with updated coordinates, larger popup, a button, and a dropdown list
         var ledomeVegetal = L.marker([49.18171143760297, -0.34688136578783596]).addTo(map);
         ledomeVegetal.bindPopup(
-            "<div class='popup-content'>" +
-            "<b>Le Dôme Végétalisé</b><br>" +
-            "Caractéristiques (proba): A, B, C<br>" +
-            '<img src="images/ledome_vegetal.png" alt="Le Dôme Végétal Image" style="width:100%; height:auto;">' +
-            '<br><button onclick="onButtonClick()">Voter pour</button>' +
-            '<br><label for="dropdown">Choose an option:</label>' +
-            '<select id="dropdown">' +
-            '<option value="option1">Chaleur</option>' +
-            '<option value="option2">Inondation</option>' +
-            '<option value="option3">Air</option>' +
-            '</select>' +
-            "</div>"
+            // "<div class='popup-content'>" +
+            // "<b>Le Dôme Végétalisé</b><br>" +
+            // "Caractéristiques (proba): A, B, C<br>" +
+            // '<img src="images/ledome_vegetal.png" alt="Le Dôme Végétal Image" style="width:100%; height:auto;">' +
+            // '<br><button onclick="onButtonClick()">Voter pour</button>' +
+            // '<br><label for="dropdown">Choose an option:</label>' +
+            // '<select id="dropdown">' +
+            // '<option value="option1">Chaleur</option>' +
+            // '<option value="option2">Inondation</option>' +
+            // '<option value="option3">Air</option>' +
+            // '</select>' +
+            // "</div>"
+            '<div id="gallery-container">' +
+            '<img id="current-image" src="images/test/1.png" alt="Gallery Image">' +
+            '<button id="next-button" onclick ="swapImages()">Next</button>' +
+            '</div>'
         );
 
         // Function to handle button click
