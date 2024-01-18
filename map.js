@@ -16,8 +16,7 @@ class Site {
       this.address = null;
       this.coordinates = coordinates;
       this.imageName = null;
-      this.score = null;
-      this.dict = {};
+      this.characteriticsVote = {};
     }
 }
 
@@ -26,6 +25,20 @@ class Vote {
     this.site = site;
     this.user = user;
     this.characteritic = characteritic;
+  }
+
+  computeVoteValue() {
+  
+    var totalVote;
+    d = distance(this.site.coordinates, this.user.coordinates)
+    
+    for(elm of this.site.characteriticsVote) {
+      totalVote += this.site.characteriticsVote[elm];
+    }
+  
+    value = 1/d * this.site.characteriticsVote[this.characteritic]/totalVote; 
+
+    return value;
   }
 }
 
@@ -64,10 +77,12 @@ function readSitesFromJSON(jsonName) {
   return fetch(jsonName + '.json')
       .then(response => response.json())
       .then(jsonData => {
-        var userAddress = localStorage.getItem("userData")["address"];
-        let user = new User("Alan", userAddress);
+        var userDataString = localStorage.getItem("userData");
+        var userData = JSON.parse(userDataString);
+        var userAddress = userData.address;
+        var userName = userData.name;
+        let user = new User(userName, userAddress);
         return user.fetchCoordinates().then(() => {
-          console.log(user.coordinates);
           let sites = [];
           for (let site of jsonData.projects) {
             sites.push(site);
@@ -88,26 +103,7 @@ function distance(coord1, coord2) {
   return 2 * r * Math.asin(Math.sqrt(a));
 }
 
-function computeVoteValue(vote) {
-
-  d = distance(vote.site.coordinates, vote.user.coordinates)
-  value = 1/d * vote.site.Nbp1/vote.site.Nbp; // TO change with dict
-}
 
 
-/*
-function distance(coord1, coord2) {
-    var φ1 = coord.lat * Math.PI/180; // φ, λ in radians
-    var φ2 = coord2.lat * Math.PI/180;
-    var Δφ = (coord2.lat - coord1.lat) * Math.PI/180;
-    var Δλ = (coord2.lon - coord1.lon) * Math.PI/180;
-    
-    var haversine = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-            Math.cos(φ1) * Math.cos(φ2) *
-            Math.sin(Δλ/2) * Math.sin(Δλ/2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-    const d = R * c; // in metres
-    return d;
-}*/
 

@@ -36,7 +36,7 @@
     window.onload = async function() {
       try {
         Sites = await readSitesFromJSON("projects");
-        console.log(Sites[0].characteristics["+5°C en été"]);
+      
       } catch (error) {
         console.error("Error loading sites:", error);
       }
