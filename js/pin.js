@@ -35,6 +35,8 @@ window.onload = async function () {
     }
 };
 
+currentImage.src = projects[0].photo_name;
+
 function swapImages() {
     const currentImage = document.getElementById('current-image');
     console.log(projects.length);
