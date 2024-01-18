@@ -17,7 +17,7 @@
     <div id="map"></div>
     <div id="spot-info"></div>
     <input type="text" id="address-input" placeholder="Enter address">
-    <button onclick="geocodeAddress()">Show Coordinates</button>
+    <button onclick="printGeocodeAddress()">Show Coordinates</button>
   </div>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
@@ -75,7 +75,7 @@ function addPins(sites){
     }
 
     // Function to geocode the entered address and display coordinates
-    function geocodeAddress() {
+    function printGeocodeAddress() {
       var addressInput = document.getElementById('address-input').value;
 
       // Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
@@ -114,6 +114,11 @@ function addPins(sites){
       spotInfo.innerHTML = "<div class='popup-content'><b>Clicked Point</b><br>" + clickedCoordinates + "</div>";
     });
   </script>
+  <div id="image-container">
+    <!-- Images will be dynamically loaded here -->
+</div>
+<script src="rank.js"></script>
+
 
 </body>
 </html>
