@@ -30,7 +30,7 @@ function swapImages(id) {
         if ((Sites[i].photo_name) != id) {
             continue;
         }
-        var currentPosition = (currentImage.src).split(".png")[0][-1];
+        var currentPosition = (currentImage.src).split(".png")[0];
         console.log(currentPosition);
         if ((imageFolder + Sites[i].photo_name) == currentImage.src) {
             console.log(newPhotoName);
