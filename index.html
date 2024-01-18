@@ -45,6 +45,13 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
+        var RankScriptLoaded = false;
+        loadRankScript = function () {
+            var script = document.createElement('script');
+            script.src = 'js/rank.js';
+            document.head.appendChild(script);
+            RankScriptLoaded = true;
+        }
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
                 navigator.serviceWorker
@@ -67,8 +74,6 @@
             document.getElementById('camera-button').style.display = 'none';
             document.getElementById('map').style.height = "80vh";
         }
-    </script>
-    <script>
         var map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates;
 
         function setMap(latitude, longitude) {
@@ -109,6 +114,30 @@
             '</select>' +
             "</div>"
         );
+        var zone = L.marker([49.182973, -0.349148]).addTo(map);
+
+        zone.on('click', function () {
+            loadRankScript();
+        });
+
+        zone.bindPopup(
+            '<div id="image-container" class="image-container">' +
+            "<b>Classement des préférences des votes</b><br>" +
+            "<br>" +
+            '</div>'
+        );
+
+        zone.setIcon(L.icon({
+            iconUrl: 'images/icons/zone.png',
+            iconSize: [30, 50],
+            iconAnchor: [25, 50],
+            popupAnchor: [0, -50]
+        }));
+        zone.bindTooltip("Presqu'île", {
+            permanent: true,
+            direction: 'right',
+            offset: [0, 0]
+        });
 
         // Function to handle button click
         function onButtonClick() {
