@@ -26,14 +26,15 @@ const nextButton = document.getElementById('next-button');
 
 function swapImages(id) {
     const currentImage = document.getElementById(id);
-    console.log(currentImage.src);
     for (var i = 0; i < Sites.length; i++) {
-        for (var j = 1; j <= Sites[i].number_of_propositions; j++) {
-            if ((imageFolder + Sites[i].photo_name) == currentImage.src) {
-                var newPhotoName = Sites[i].photo_name.replace(".png", "_" + i + ".png");
-                console.log(newPhotoName);
-                currentImage.src = imageFolder + newPhotoName;
-            }
+        if ((imageFolder + Sites[i].photo_name) != id) {
+            continue;
+        }
+        var currentPosition = (currentImage.src).split(".png")[0][-1];
+        console.log(currentPosition);
+        if ((imageFolder + Sites[i].photo_name) == currentImage.src) {
+            console.log(newPhotoName);
+            currentImage.src = imageFolder + newPhotoName;
         }
     }
 }
