@@ -23,7 +23,7 @@ function onImageTaken(imageURI) {
                 body: formData
             })
             .then(response => {
-                alert(response)
+                alert(response.text)
                 if (response.ok) {
                     alert('Data uploaded successfully!');
                 } else {
