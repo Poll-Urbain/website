@@ -72,6 +72,11 @@ function logIn() {
     }
 }
 
+// redirect to the project website (vitrine)
+function redirectToLink() {
+    window.location.href = 'https://riotwalk.wixsite.com/poll-urbain';
+}
+
 $(document).ready(() => {
     $("#signup_form span, #login_form span").hide();
     $password.focus(passwordEvent).keyup(passwordEvent).keyup(confirmPasswordEvent).keyup(enableSubmitEvent);
