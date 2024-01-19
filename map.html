@@ -6,30 +6,8 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="map.css" />
   <title>Interactive Map</title>
-  <style>
-    #map-container {
-      text-align: center;
-    }
-    #map {
-      height: 600px; /* Increased height */
-      width: 70%; /* Reduced width */
-      margin: 20px auto;
-    }
-    .popup-content {
-      max-height: 300px; /* Set your desired maximum height */
-      overflow-y: auto; /* Enable vertical scroll if content exceeds the maximum height */
-      text-align: center;
-
-    }
-
-    img {
-      max-width: 200px;
-      max-height: 170px;
-      width: 90%; /* Set the desired width */
-      height: auto; /* Automatically calculate the height to maintain aspect ratio */
-    }
-  </style>
   <script src="http://127.0.0.1:5500/map.js" type="text/javascript"> // To change with server address </script> 
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
   <div id="map-container">
@@ -39,119 +17,34 @@
     <input type="text" id="address-input" placeholder="Enter address">
     <button onclick="geocodeAddressFromTextField()">Show Coordinates</button>
   </div>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <script>
-    function loadRankScript() {
-        var script = document.createElement('script');
-        script.src = 'rank.js';
-        document.head.appendChild(script);
-    }
-    var Sites;
-    window.onload = async function() {
-      try {
-        Sites = await readSitesFromJSON("projects");
-      
-      } catch (error) {
-        console.error("Error loading sites:", error);
-      }
-    };
+
+    var Sites; //Sites array 
 
     var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates
     var marker = []
     var i = 0;
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
+    window.onload = async function() {
+        try {
+          Sites = await readSitesFromJSON("projects");
+          addPins(Sites);
+        } catch (error) {
+          console.error("Error loading sites:", error);
+        }
+    };
 
-function addPins(sites){
-
-  for (let i = 0; i < sites.length; i++){
-      marker[i] = L.marker([sites[i].coordinates.latitude, sites[i].coordinates.longitude]).addTo(map);
-      htmlPopup = "<div class='popup-content'>" +
-        "<b>"+sites[i].name +"</b><br>" +
-        "Caractéristiques (proba):"+ sites[i].characteristics+"<br>" +
-        '<div><img src="images/'+sites[i].photo_name+'" alt="'+ sites[i].name +'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
-        '<br><button onclick="onButtonClick()">Voter pour</button>' +
-        '<br><label for="dropdown">Choose an option:</label>' +
-        '<select id="dropdown">' +
-        '<option value="Chaleur">Chaleur</option>' +
-        '<option value="Inondation">Inondation</option>' +
-        '<option value="Air">Air</option>' +
-        '</select>' +
-        "</div>";
-      marker[i].bindPopup(htmlPopup);
-    }
-    // Add a zone marker
-    var zone = L.marker([49.211029, -0.363451]).addTo(map);
-
-    zone.on('click', function () {
-      loadRankScript();
-    });
-
-    zone.bindPopup(
-            '<div id="image-container" class="image-container">' +
-            "<b>Classement des préférences des votes</b><br>" +
-            "<br>" +
-            '</div>'
-    );
-
-    zone.setIcon(L.icon({
-      iconUrl: 'images/icons/zone.png',
-      iconSize: [30, 50],
-      iconAnchor: [25, 50],
-      popupAnchor: [0, -50]
-    }));
-    zone.bindTooltip("Côte de nacre", {
-      permanent: true,
-      direction: 'right',
-      offset: [0, 0]
-    });
-}
-
-  window.onload = async function() {
-      try {
-        Sites = await readSitesFromJSON("projects");
-        console.log(Sites[0].name);
-        addPins(Sites);
-      } catch (error) {
-        console.error("Error loading sites:", error);
-      }
-  };
-
-    // Function to handle button click
+    /****************************
+    *Handle Button Click 
+    ***************************/
     function onButtonClick() {
       var dropdownValue = document.getElementById('dropdown').value;
       alert("Button clicked! Dropdown selected value: " + dropdownValue);
-    }
-
-    // Function to geocode the entered address and display coordinates from text field
-    function geocodeAddressFromTextField() {
-      var addressInput = document.getElementById('address-input').value;
-      // Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
-      var apiKey = 'a5d1c0cbcabb4a1a8f506c8415d80cb3';
-      var geocodeUrl = 'https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(addressInput) + '&key=' + apiKey;
-      fetch(geocodeUrl)
-        .then(response => response.json())
-        .then(data => {
-          if (data.results.length > 0) {
-            var coordinates = data.results[0].geometry;
-            var coordinatesText = "Coordinates for '" + addressInput + "': " +
-              "Latitude: " + coordinates.lat.toFixed(6) +
-              ", Longitude: " + coordinates.lng.toFixed(6);
-
-            // Display coordinates in the side panel
-            document.getElementById('spot-info').innerHTML = "<div class='popup-content'>" + coordinatesText + "</div>";
-          } else {
-            alert("Geocoding failed. Please enter a valid address.");
-          }
-        })
-        .catch(error => {
-          console.error('Error during geocoding:', error);
-          alert("An error occurred during geocoding. Please try again.");
-        });
     }
 
     // Example side panel

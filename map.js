@@ -165,6 +165,63 @@ function computeWeight(voteRank){
   return 1 + 0.5 * Math.exp(-voteRank);
 }
 
+/****************************
+  *Load the rank script 
+***************************/
+    function loadRankScript() {
+      var script = document.createElement('script');
+      script.src = 'rank.js';
+      document.head.appendChild(script);
+  }
+
+/****************************
+ *Adds all Sites on the map with pins 
+ *parameters :
+ *   Site[] sites
+ ***************************/
+ function addPins(sites) {
+  for (let i = 0; i < sites.length; i++){
+      marker[i] = L.marker([sites[i].coordinates.latitude, sites[i].coordinates.longitude]).addTo(map);
+      htmlPopup = "<div class='popup-content'>" +
+        "<b>"+sites[i].name +"</b><br>" +
+        "Caractéristiques (proba):"+ sites[i].characteristics+"<br>" +
+        '<div><img src="images/'+sites[i].photo_name+'" alt="'+ sites[i].name +'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
+        '<br><button onclick="onButtonClick()">Voter pour</button>' +
+        '<br><label for="dropdown">Choose an option:</label>' +
+        '<select id="dropdown">' +
+        '<option value="Chaleur">Chaleur</option>' +
+        '<option value="Inondation">Inondation</option>' +
+        '<option value="Air">Air</option>' +
+        '</select>' +
+        "</div>";
+      marker[i].bindPopup(htmlPopup);
+    }
+    // Add a zone marker
+    var zone = L.marker([49.211029, -0.363451]).addTo(map);
+
+    zone.on('click', function () {
+      loadRankScript();
+    });
+
+    zone.bindPopup(
+            '<div id="image-container" class="image-container">' +
+            "<b>Classement des préférences des votes</b><br>" +
+            "<br>" +
+            '</div>'
+    );
+
+    zone.setIcon(L.icon({
+      iconUrl: 'images/icons/zone.png',
+      iconSize: [30, 50],
+      iconAnchor: [25, 50],
+      popupAnchor: [0, -50]
+    }));
+    zone.bindTooltip("Côte de nacre", {
+      permanent: true,
+      direction: 'right',
+      offset: [0, 0]
+    });
+}
 
 
 
