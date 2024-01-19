@@ -17,13 +17,13 @@
         echo '</script>';
         $imageContents = file_get_contents($imageURI);
 
-        $uploadsDirectory = 'images/';
+        $uploadsDirectory = '../images/';
         $imageName = 'user_proposition/user_proposition.png';
         $targetFile = $uploadsDirectory . $imageName;
 
         file_put_contents($targetFile, $imageContents);
 
-        $jsonFilePath = 'projects.json';
+        $jsonFilePath = '../projects.json';
 
         $existingData = file_get_contents($jsonFilePath);
 
