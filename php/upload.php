@@ -51,6 +51,11 @@
 
         echo $updatedData;
 
+
+        file_get_contents("../projects.json");
+        $json_data = json_decode($json,true); 
+        print_r($json_data); 
+
         echo 'Data uploaded successfully!';
     } else {
         echo '<script>';
