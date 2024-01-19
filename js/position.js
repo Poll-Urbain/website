@@ -2,7 +2,6 @@ navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
     /* result.status = "prompt" */
 });
 
-
 navigator.geolocation.getCurrentPosition(function (result) { /* ... */ })
 
 navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
@@ -21,23 +20,23 @@ function onImageTaken(imageURI) {
                 formData.append('file', fileContent);
                 formData.append('latitude', position.coords.latitude);
                 formData.append('longitude', position.coords.longitude);
-    
+
                 fetch('https://intensif08.ecole.ensicaen.fr/php/upload.php', {
                     method: 'POST',
                     body: formData
                 })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('Data uploaded successfully!');
-                    } else {
-                        console.log('Failed to upload data.');
-                    }
-                })
-                .catch(error => {
-                    console.log('Error during data upload:', error);
-                });
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Data uploaded successfully!');
+                        } else {
+                            console.log('Failed to upload data.');
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Error during data upload:', error);
+                    });
             };
-    
+
             reader.readAsText(file);
         }, error => {
             alert("Need permission to use your location in order to use your camera");

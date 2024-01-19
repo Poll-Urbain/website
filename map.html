@@ -100,9 +100,11 @@
             else {
                 alert("Geolocation services are not supported by your browser.\n\
                     You can not use the camera on this app")
-                document.getElementById('camera-button').style.display = 'none';
-                document.getElementById('map').style.height = "80vh";
             }
+        }
+        else {
+            document.getElementById('camera-button').style.display = 'none';
+            document.getElementById('map').style.height = "80vh";
         }
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
