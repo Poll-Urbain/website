@@ -1,5 +1,5 @@
 <?php
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo '<script>';
         echo 'alert("test")';
         echo '</script>';
@@ -45,6 +45,8 @@
 
         echo 'Data uploaded successfully!';
     } else {
-        echo 'Invalid request method.';
+        echo '<script>';
+        echo 'alert("test2")';
+        echo '</script>';
     }
 ?>
