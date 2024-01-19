@@ -1,169 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="map.css" />
-  <title>Interactive Map</title>
-  <style>
-    #map-container {
-      text-align: center;
-    }
-    #map {
-      height: 600px; /* Increased height */
-      width: 70%; /* Reduced width */
-      margin: 20px auto;
-    }
-    .popup-content {
-      max-height: 300px; /* Set your desired maximum height */
-      overflow-y: auto; /* Enable vertical scroll if content exceeds the maximum height */
-      text-align: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/map.css" />
+    <link rel="icon" href="images/icons/favicon.ico" />
 
-    img {
-      max-width: 200px;
-      max-height: 170px;
-      width: 90%; /* Set the desired width */
-      height: auto; /* Automatically calculate the height to maintain aspect ratio */
-    }
-  </style>
-  <script src="http://127.0.0.1:5500/map.js" type="text/javascript"> // To change with server address </script> 
+    <link rel="manifest" href="/manifest.json" />
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="images/icons/poll_urbain_logo_72x72.png" />
+    <link rel="apple-touch-icon" href="images/icons/poll_urbain_logo_96x96.png" />
+    <link rel="apple-touch-icon" href="images/icons/poll_urbain_logo_128x128.png" />
+    <link rel="apple-touch-icon" href="images/icons/poll_urbain_logo_144x144.png" />
+    <link rel="apple-touch-icon" href="images/icons/poll_urbain_logo_152x152.png" />
+    <link rel="apple-touch-icon" href="images/icons/poll_urbain_logo_192x192.png" />
+    <link rel="apple-touch-icon" href="images/icons/poll_urbain_logo_384x384.png" />
+    <link rel="apple-touch-icon" href="images/icons/poll_urbain_logo_512x512.png" />
+    <meta name="apple-mobile-web-app-status-bar" content="#db4938" />
+    <meta name="theme-color" content="#db4938" />
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/pin.js"></script>
+    <title>Interactive Map</title>
 </head>
+
 <body>
-  <div id="map-container">
-    <h1>Poll Urbain</h1>
-    <div id="map"></div>
-    <div id="spot-info"></div>
-    <input type="text" id="address-input" placeholder="Enter address">
-    <button onclick="geocodeAddressFromTextField()">Show Coordinates</button>
-  </div>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <main>
+        <!--resize the next div-->
+        <div id="map-container">
+            <h1>Poll Urbain</h1>
+            <div id="map"></div>
+        </div>
+        <div id="camera-button">
+            <!--button to add camera-->
+            <label for="file-input">
+                <img id="camera-pic" src="images/pics/camera-icon.png" />
+            </label>
+            <input id="file-input" type="file" name="image" accept="image/*" capture="environment">
+        </div>
+    </main>
 
-  <script>
-    function loadRankScript() {
-        var script = document.createElement('script');
-        script.src = 'rank.js';
-        document.head.appendChild(script);
-    }
-    var Sites;
-    window.onload = async function() {
-      try {
-        Sites = await readSitesFromJSON("projects");
-      
-      } catch (error) {
-        console.error("Error loading sites:", error);
-      }
-    };
+    <script>
+        var Sites;
 
-    var map = L.map('map').setView([49.183333, -0.350], 13); // Updated coordinates
-    var marker = []
-    var i = 0;
+        /****************************
+        *Handle Button Click 
+        ***************************/
+        function onButtonClick() {
+            var dropdownValue = document.getElementById('dropdown').value;
+            alert("Button clicked! Dropdown selected value: " + dropdownValue);
+        }
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+        var map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates
+        var marker = []
 
+        window.onload = async function () {
+            try {
+                Sites = await readSitesFromJSON("projects");
+                addPins(Sites);
+            } catch (error) {
+                console.error("Error loading sites:", error);
+            }
+        };
 
-function addPins(sites){
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function () {
+                navigator.serviceWorker
+                    .register("js/serviceWorker.js")
+                    .then(res => console.log("service worker registered"))
+                    .catch(err => console.log("service worker not registered", err))
+            })
+        }
 
-  for (let i = 0; i < sites.length; i++){
-      marker[i] = L.marker([sites[i].coordinates.latitude, sites[i].coordinates.longitude]).addTo(map);
-      htmlPopup = "<div class='popup-content'>" +
-        "<b>"+sites[i].name +"</b><br>" +
-        "Caractéristiques (proba):"+ sites[i].characteristics+"<br>" +
-        '<div><img src="images/'+sites[i].photo_name+'" alt="'+ sites[i].name +'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
-        '<br><button onclick="onButtonClick()">Voter pour</button>' +
-        '<br><label for="dropdown">Choose an option:</label>' +
-        '<select id="dropdown">' +
-        '<option value="Chaleur">Chaleur</option>' +
-        '<option value="Inondation">Inondation</option>' +
-        '<option value="Air">Air</option>' +
-        '</select>' +
-        "</div>";
-      marker[i].bindPopup(htmlPopup);
-    }
-    // Add a zone marker
-    var zone = L.marker([49.211029, -0.363451]).addTo(map);
+        const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
 
-    zone.on('click', function () {
-      loadRankScript();
-    });
+        function setMap(latitude, longitude) {
+            map = map.setView([latitude, longitude], 17);
+        }
 
-    zone.bindPopup(
-            '<div id="image-container" class="image-container">' +
-            "<b>Classement des préférences des votes</b><br>" +
-            "<br>" +
-            '</div>'
-    );
+        if (isMobile) {
+            document.getElementById('map').style.height = "60vh";
+            var script = document.createElement('script');
+            script.src = 'js/position.js';
+            document.head.appendChild(script);
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    setMap(position.coords.latitude, position.coords.longitude);
+                }, error => {
+                    alert("Need permission to use your location in order to use your camera");
+                });
+            }
+            else {
+                // If not mobile, hide the camera button
+                document.getElementById('camera-button').style.display = 'none';
+                document.getElementById('map').style.height = "80vh";
+                alert("Geolocation services are not supported by your browser.\n\
+                    You can not use the camera on this app")
+            }
+        }
 
-    zone.setIcon(L.icon({
-      iconUrl: 'images/icons/zone.png',
-      iconSize: [30, 50],
-      iconAnchor: [25, 50],
-      popupAnchor: [0, -50]
-    }));
-    zone.bindTooltip("Côte de nacre", {
-      permanent: true,
-      direction: 'right',
-      offset: [0, 0]
-    });
-}
-
-  window.onload = async function() {
-      try {
-        Sites = await readSitesFromJSON("projects");
-        console.log(Sites[0].name);
-        addPins(Sites);
-      } catch (error) {
-        console.error("Error loading sites:", error);
-      }
-  };
-
-    // Function to handle button click
-    function onButtonClick() {
-      var dropdownValue = document.getElementById('dropdown').value;
-      alert("Button clicked! Dropdown selected value: " + dropdownValue);
-    }
-
-    // Function to geocode the entered address and display coordinates from text field
-    function geocodeAddressFromTextField() {
-      var addressInput = document.getElementById('address-input').value;
-      // Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
-      var apiKey = 'a5d1c0cbcabb4a1a8f506c8415d80cb3';
-      var geocodeUrl = 'https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(addressInput) + '&key=' + apiKey;
-      fetch(geocodeUrl)
-        .then(response => response.json())
-        .then(data => {
-          if (data.results.length > 0) {
-            var coordinates = data.results[0].geometry;
-            var coordinatesText = "Coordinates for '" + addressInput + "': " +
-              "Latitude: " + coordinates.lat.toFixed(6) +
-              ", Longitude: " + coordinates.lng.toFixed(6);
-
-            // Display coordinates in the side panel
-            document.getElementById('spot-info').innerHTML = "<div class='popup-content'>" + coordinatesText + "</div>";
-          } else {
-            alert("Geocoding failed. Please enter a valid address.");
-          }
-        })
-        .catch(error => {
-          console.error('Error during geocoding:', error);
-          alert("An error occurred during geocoding. Please try again.");
-        });
-    }
-
-    // Example side panel
-    var spotInfo = document.getElementById('spot-info');
-
-    map.on('click', function(e) {
-      var clickedLatLng = e.latlng;
-      var clickedCoordinates = "Latitude: " + clickedLatLng.lat.toFixed(6) + "<br>Longitude: " + clickedLatLng.lng.toFixed(6);
-
-      // Display clicked coordinates in the side panel
-      spotInfo.innerHTML = "<div class='popup-content'><b>Clicked Point</b><br>" + clickedCoordinates + "</div>";
-    });
-  </script>
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    </script>
 
 </body>
+
 </html>

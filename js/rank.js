@@ -1,12 +1,12 @@
 var imageContainer = document.getElementById('image-container');
-var images = ['campus1.jpg', 'campus2.jpg', 'campus4.jpg'];
+var images = ['campus1/campus1.png', 'campus2/campus2.png', 'campus4/campus4.png'];
 var draggedItem = null;
 
 // Dynamically load images into the container
 images.forEach(image => {
     const voteElement = document.createElement('div');
     const imgElement = document.createElement('img');
-    imgElement.src = "images/"+image;
+    imgElement.src = "../images/" + image;
     imgElement.style = "width: 100%; height: auto;";
     const caracteristics = document.createElement('div');
     const caracteristic1 = document.createElement('div');

@@ -73,8 +73,7 @@ function signUp() {
     // Stores user informations in localStorage
     localStorage.setItem('userData', JSON.stringify(userData));
 
-    alert("Account created successfully!");
-    window.location.href = "./signup.html";
+    window.location.href = "./map.html";
 }
 
 /****************************
@@ -104,11 +103,11 @@ $(document).ready(() => {
     $password.focus(passwordEvent).keyup(passwordEvent).keyup(confirmPasswordEvent).keyup(enableSubmitEvent);
     $confirmPassword.focus(confirmPasswordEvent).keyup(confirmPasswordEvent).keyup(enableSubmitEvent);
     enableSubmitEvent();
-    $("#signup_form").submit(function(e) {
+    $("#signup_form").submit(function (e) {
         e.preventDefault();
         signUp();
     });
-    $("#login_form").submit(function(e) {
+    $("#login_form").submit(function (e) {
         e.preventDefault();
         logIn();
     });
