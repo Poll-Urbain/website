@@ -47,6 +47,8 @@
 
         $updatedData = json_encode($decodedData, JSON_PRETTY_PRINT);
 
+        file_put_contents($jsonFilePath, $updatedData)
+
         echo $updatedData;
 
         echo 'Data uploaded successfully!';
