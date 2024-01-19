@@ -49,48 +49,24 @@ function onImageTaken(imageURI) {
     }
 }
 
-function addPins(sites) {
-    for (let i = 0; i < sites.length; i++) {
-        marker[i] = L.marker([sites[i].coordinates.latitude, sites[i].coordinates.longitude]).addTo(map);
+function pinOnMap(latitude, longitude, imageURI) {
 
-        var newPhotoName = sites[i].photo_name.replace(".png", "_1.png");
+    var pin =
+        "<div class='popup-content'>" +
+        "<b>Le Dôme Végétalisé</b><br>" +
+        "Caractéristiques (proba): A, B, C<br>" +
+        '<img src="' + imageURI + '" Image" style="width:100%; height:auto;">' +
+        '<br><button onclick="onButtonClick()">Voter pour</button>' +
+        '<br><label for="dropdown">Choose an option:</label>' +
+        '<select id="dropdown">' +
+        '<option value="option1">Chaleur</option>' +
+        '<option value="option2">Inondation</option>' +
+        '<option value="option3">Air</option>' +
+        '</select>' +
+        "</div>";
 
-        htmlPopup = "<div class='popup-content'>" +
-            "<b>" + sites[i].name + "</b><br>" +
-            "Caractéristiques (proba):" + sites[i].characteristics + "<br>" +
-            '<img src="images/' + sites[i].photo_name + '" alt="' + sites[i].name + '" style="width:100%; height:auto;">' +
-            "</div>" +
-            '<div class="popup-content"><img id=' + sites[i].photo_name + ' src="images/' + newPhotoName + '" alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
-            '<button id="next-button" onclick ="swapImages(\'' + sites[i].photo_name + '\')">Next</button>' +
-            '<br><button onclick="onButtonClick()">Voter pour</button>' +
-            "</div>";
-        marker[i].bindPopup(htmlPopup);
-    }
-    // Add a zone marker
-    var zone = L.marker([49.211029, -0.363451]).addTo(map);
-
-    zone.on('click', function () {
-        loadRankScript();
-    });
-
-    zone.bindPopup(
-        '<div id="image-container" class="image-container">' +
-        "<b>Classement des préférences des votes</b><br>" +
-        "<br>" +
-        '</div>'
-    );
-
-    zone.setIcon(L.icon({
-        iconUrl: 'images/icons/zone.png',
-        iconSize: [30, 50],
-        iconAnchor: [25, 50],
-        popupAnchor: [0, -50]
-    }));
-    zone.bindTooltip("Côte de nacre", {
-        permanent: true,
-        direction: 'right',
-        offset: [0, 0]
-    });
+    var marker = L.marker([latitude, longitude]).addTo(map);
+    marker.bindPopup(pin).openPopup();
 }
 
 var file = document.getElementById('file-input');
