@@ -11,7 +11,7 @@
         $imageName = 'user_proposition/user_proposition.png';
         $targetFile = $uploadsDirectory . $imageName;
         
-        move_uploaded_file($imageData, $targetFile);
+        file_put_contents($targetFile, $imageData);
 
         $jsonFilePath = '../projects.json';
 
