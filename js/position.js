@@ -16,6 +16,7 @@ function onImageTaken(imageURI) {
             const reader = new FileReader();
             reader.onload = function (e) {
                 const fileContent = e.target.result;
+                console.log(fileContent);
 
                 formData.append('file', fileContent);
                 formData.append('latitude', position.coords.latitude);
