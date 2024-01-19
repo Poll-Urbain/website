@@ -141,6 +141,9 @@ body {
 }
 
 #logo {
+    background-color: lightgray;
+    border-radius: 20%;
+    border: 5px;
     height: 100px; /* Adjust the size as needed */
     width: auto; /* Maintain aspect ratio */
 }
