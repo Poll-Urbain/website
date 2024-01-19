@@ -2,30 +2,16 @@
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: POST");
     header("Access-Control-Allow-Headers: Content-Type");
-    echo '<script>';
-    echo 'console.log("hello")';
-    echo '</script>';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        echo '<script>';
-        echo 'alert("test")';
-        echo '</script>';
-        $imageURI = $_POST['file'];
+        $imageData = $_POST['file'];
         $latitude = $_POST['latitude'];
         $longitude = $_POST['longitude'];
-        echo '<script>';
-        echo 'pinOnMap(' . $latitude . ', ' . $longitude .', ' . $imageURI . ');';
-        echo '</script>';
-
-        // $imageContents = file_get_contents($imageURI);
-        // echo $imageContents;
 
         $uploadsDirectory = '../images/';
         $imageName = 'user_proposition/user_proposition.png';
         $targetFile = $uploadsDirectory . $imageName;
         
-        move_uploaded_file($_FILES["file-input"]["tmp_name"], $targetFile);
-
-        // file_put_contents($targetFile, $imageContents);
+        move_uploaded_file($imageData, $targetFile);
 
         $jsonFilePath = '../projects.json';
 
@@ -52,13 +38,5 @@
         $updatedData = json_encode($decodedData, JSON_PRETTY_PRINT);
 
         // file_put_contents($jsonFilePath, $updatedData);
-
-        echo $updatedData;
-
-        echo 'Data uploaded successfully!';
-    } else {
-        echo '<script>';
-        echo 'alert("test2")';
-        echo '</script>';
     }
 ?>

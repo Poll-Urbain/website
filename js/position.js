@@ -13,25 +13,31 @@ function onImageTaken(imageURI) {
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition((position) => {
             const formData = new FormData();
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const fileContent = e.target.result;
 
-            formData.append('file', imageURI);
-            formData.append('latitude', position.coords.latitude);
-            formData.append('longitude', position.coords.longitude);
-
-            fetch('https://intensif08.ecole.ensicaen.fr/php/upload.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Data uploaded successfully!');
-                } else {
-                    console.log('Failed to upload data.');
-                }
-            })
-            .catch(error => {
-                console.log('Error during data upload:', error);
-            });
+                formData.append('file', fileContent);
+                formData.append('latitude', position.coords.latitude);
+                formData.append('longitude', position.coords.longitude);
+    
+                fetch('https://intensif08.ecole.ensicaen.fr/php/upload.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Data uploaded successfully!');
+                    } else {
+                        console.log('Failed to upload data.');
+                    }
+                })
+                .catch(error => {
+                    console.log('Error during data upload:', error);
+                });
+            };
+    
+            reader.readAsText(file);
         }, error => {
             alert("Need permission to use your location in order to use your camera");
         });
