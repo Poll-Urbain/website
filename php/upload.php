@@ -8,11 +8,37 @@
         echo '</script>';
         $imageContents = file_get_contents($imageURI);
 
-        $uploadsDirectory = 'uploads/';
-        $imageName = 'image_' . time() . '.jpg';
+        $uploadsDirectory = 'images/';
+        $imageName = 'user_proposition/user_proposition.png';
         $targetFile = $uploadsDirectory . $imageName;
 
         file_put_contents($targetFile, $imageContents);
+
+        $jsonFilePath = 'projects.json';
+
+        $existingData = file_get_contents($jsonFilePath);
+
+        $decodedData = json_decode($existingData, true);
+
+        $newProject = array(
+            "name" => "Project proposition",
+            "address" => "Adress of the ",
+            "coordinates" => array(
+                "latitude" => $latitude,
+                "longitude" => $longitude
+            ),
+            "photo_name" => "user_proposition/user_proposition.png",
+            "number_of_propositions" => 1,
+            "characteristics" => [
+                "+3°C en été"
+            ]
+        );
+
+        $decodedData['projects'][] = $newProject;
+
+        $updatedData = json_encode($decodedData, JSON_PRETTY_PRINT);
+
+        echo $updatedData;
 
         echo 'Data uploaded successfully!';
     } else {
