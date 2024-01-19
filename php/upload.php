@@ -1,4 +1,7 @@
 <?php
+    echo '<script>';
+    echo 'console.log("hello")';
+    echo '</script>';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo '<script>';
         echo 'alert("test")';
