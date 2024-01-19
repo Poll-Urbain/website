@@ -78,23 +78,15 @@
 
         const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
 
-        if (isMobile) {
-            document.getElementById('map').style.height = "60vh";
-            var script = document.createElement('script');
-            script.src = 'js/position.js';
-            document.head.appendChild(script);
-        }
-        else {
-            // If not mobile, hide the camera button
-            document.getElementById('camera-button').style.display = 'none';
-            document.getElementById('map').style.height = "80vh";
-        }
-        
         function setMap(latitude, longitude) {
             map = map.setView([latitude, longitude], 17);
         }
 
         if (isMobile) {
+            document.getElementById('map').style.height = "60vh";
+            var script = document.createElement('script');
+            script.src = 'js/position.js';
+            document.head.appendChild(script);
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition((position) => {
                     setMap(position.coords.latitude, position.coords.longitude);
@@ -103,6 +95,9 @@
                 });
             }
             else {
+                // If not mobile, hide the camera button
+                document.getElementById('camera-button').style.display = 'none';
+                document.getElementById('map').style.height = "80vh";
                 alert("Geolocation services are not supported by your browser.\n\
                     You can not use the camera on this app")
             }
