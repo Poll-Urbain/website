@@ -1,7 +1,7 @@
 
 const R = 6371e3; // Earth radius meters
 
-
+var images = [];
 /****************************
  *Coordinates
  *  Longitude(float)
@@ -175,6 +175,7 @@ function loadRankScript() {
 }
 
 function addToVotes(photo_name) {
+  console.log("ADD TO VOTES");
   if (nbVotes==0){
       alert("Vous n'avez plus de vote disponible, vous pouvez encore revenir sur votre décision en cliquant sur le marqueur rouge");
       return
@@ -203,7 +204,7 @@ function addPins(sites) {
             "</div>" +
             '<div class="popup-content"><img id=' + sites[i].photo_name + ' src="images/' + newPhotoName + '" alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
             '<button id="next-button" onclick ="swapImages(\'' + sites[i].photo_name + '\')">Next</button>' +
-            '<br><button onclick="addToVotes(\"'+newPhotoName+'\")">Voter pour</button>' +
+            '<br><button onclick="addToVotes(\''+newPhotoName+'\')">Voter pour</button>' +
             "</div>";
         marker[i].bindPopup(htmlPopup);
     }

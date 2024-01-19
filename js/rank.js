@@ -8,7 +8,7 @@ var draggedItem = null;
 //user2.fetchCoordinates();
 
 // Dynamically load images into the container
-function printVotes(){
+
     var i = 0;
     images.forEach(image => {
         const voteElement = document.createElement('div');
@@ -72,7 +72,6 @@ function printVotes(){
         imageContainer.appendChild(voteElement);
         i++;
     });
-}
 
 // Enable drag-and-drop functionality
 
