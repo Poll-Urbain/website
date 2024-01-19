@@ -89,8 +89,7 @@
 
         const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
 
-
-        if (isMobile) {
+        if (!isMobile) {
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition((position) => {
                     setMap(position.coords.latitude, position.coords.longitude);
