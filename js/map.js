@@ -223,32 +223,3 @@ function addPins(sites) {
     offset: [0, 0]
   });
 }
-// Add a zone marker
-var zone = L.marker([49.211029, -0.363451]).addTo(map);
-
-zone.on('click', function () {
-  loadRankScript();
-});
-
-zone.bindPopup(
-  '<div id="image-container" class="image-container">' +
-  "<b>Classement des préférences des votes</b><br>" +
-  "<br>" +
-  '</div>'
-);
-
-zone.setIcon(L.icon({
-  iconUrl: 'images/icons/zone.png',
-  iconSize: [30, 50],
-  iconAnchor: [25, 50],
-  popupAnchor: [0, -50]
-}));
-zone.bindTooltip("Côte de nacre", {
-  permanent: true,
-  direction: 'right',
-  offset: [0, 0]
-});
-}
-
-
-
