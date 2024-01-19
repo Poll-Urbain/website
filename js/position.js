@@ -24,13 +24,13 @@ function onImageTaken(imageURI) {
             })
             .then(response => {
                 if (response.ok) {
-                    alert('Data uploaded successfully!');
+                    console.log('Data uploaded successfully!');
                 } else {
-                    alert('Failed to upload data.');
+                    console.log('Failed to upload data.');
                 }
             })
             .catch(error => {
-                alert('Error during data upload:', error);
+                console.log('Error during data upload:', error);
             });
         }, error => {
             alert("Need permission to use your location in order to use your camera");

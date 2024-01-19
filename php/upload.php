@@ -1,11 +1,14 @@
 <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        echo '<script>';
+        echo 'alert("test")';
+        echo '</script>';
         $imageURI = $_POST['file'];
         $latitude = $_POST['latitude'];
         $longitude = $_POST['longitude'];
-        //echo '<script>';
-        //echo 'pinOnMap(' . $latitude . ', ' . $longitude .', ' . $imageURI . ');';
-        //echo '</script>';
+        echo '<script>';
+        echo 'pinOnMap(' . $latitude . ', ' . $longitude .', ' . $imageURI . ');';
+        echo '</script>';
         $imageContents = file_get_contents($imageURI);
 
         $uploadsDirectory = 'images/';
