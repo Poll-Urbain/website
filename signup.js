@@ -1,22 +1,36 @@
 var $password = $("#password");
 var $confirmPassword = $("#confirm_password");
 
-// Check if the password is valid
+/****************************
+ *Check password validity
+ *return :
+ *   Bool validity
+ ***************************/
 function isPasswordValid() {
     return $password.val().length > 8;
 }
 
-// Check if passwords match
+/****************************
+ *Check if passwords matches
+ *return :
+ *   Bool passwordIsMatching 
+ ***************************/
 function arePasswordsMatching() {
     return $password.val() === $confirmPassword.val();
 }
 
-// Determine if the form can be submitted
+/****************************
+ *Determine if the form can be submitted
+ *return :
+ *   Bool formCanBeSubmitted
+ ***************************/
 function canSubmit() {
     return isPasswordValid() && arePasswordsMatching();
 }
 
-// Handle password validation events
+/****************************
+ *Handle password validation events
+ ***************************/
 function passwordEvent() {
     if (isPasswordValid()) {
         $password.next().hide();
@@ -25,7 +39,9 @@ function passwordEvent() {
     }
 }
 
-// Handle confirm password validation events
+/****************************
+ *Handle confirm password validation events
+ ***************************/
 function confirmPasswordEvent() {
     if (arePasswordsMatching()) {
         $confirmPassword.next().hide();
@@ -34,12 +50,16 @@ function confirmPasswordEvent() {
     }
 }
 
-// Enable or disable the submit button
+/****************************
+ *Enable or disable the submit button
+ ***************************/
 function enableSubmitEvent() {
     $("#signup_submit").prop("disabled", !canSubmit());
 }
 
-// Handle user sign up
+/****************************
+ *Handle user sign up
+ ***************************/
 function signUp() {
     var userData = {
         username: $("#username").val(),
@@ -50,14 +70,16 @@ function signUp() {
         city: $("#city").val()
     };
 
-    // Store user information in localStorage
+    // Stores user informations in localStorage
     localStorage.setItem('userData', JSON.stringify(userData));
 
     alert("Account created successfully!");
     window.location.href = "./signup.html";
 }
 
-// Handle user log in
+/****************************
+ *Handle user log in
+ ***************************/
 function logIn() {
     var username = $("#login_username").val();
     var password = $("#login_password").val();
