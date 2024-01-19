@@ -10,8 +10,6 @@
         $uploadsDirectory = '../images/';
         $imageName = 'user_proposition/user_proposition.png';
         $targetFile = $uploadsDirectory . $imageName;
-        
-        move_uploaded_file($imageData, $targetFile);
 
         $jsonFilePath = '../projects.json';
 
@@ -37,6 +35,6 @@
 
         $updatedData = json_encode($decodedData, JSON_PRETTY_PRINT);
 
-        // file_put_contents($jsonFilePath, $updatedData);
+        file_put_contents($jsonFilePath, $updatedData);
     }
 ?>
