@@ -83,16 +83,22 @@ p:last-of-type {
 }
 
 .top-right-container {
-    position: fixed; /* Fixed position relative to the viewport */
-    top: 0; /* Align to the top */
-    right: 0; /* Align to the right */
-    margin: 10px; /* Add some margin */
-    z-index: 1000; /* Ensure it's above other elements */
+    position: fixed;
+    /* Fixed position relative to the viewport */
+    top: 0;
+    /* Align to the top */
+    right: 0;
+    /* Align to the right */
+    margin: 10px;
+    /* Add some margin */
+    z-index: 1000;
+    /* Ensure it's above other elements */
 }
 
 .top-right-container button {
     padding: 10px 20px;
-    background-color: #4CAF50; /* Example button color */
+    background-color: #4CAF50;
+    /* Example button color */
     color: white;
     border: none;
     border-radius: 5px;
@@ -100,5 +106,6 @@ p:last-of-type {
 }
 
 .top-right-container button:hover {
-    background-color: #45a049; /* Darker shade for hover effect */
+    background-color: #45a049;
+    /* Darker shade for hover effect */
 }
