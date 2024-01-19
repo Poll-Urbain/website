@@ -42,7 +42,13 @@
             </label>
             <input id="file-input" type="file" name="image" accept="image/*" capture="environment">
         </div>
+<div id="idNbVotes"></div>
+
     </main>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/pin.js"></script>
 
     <script>
         var Sites;
@@ -58,41 +64,35 @@
         var map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates
         var marker = []
 
-        window.onload = async function () {
-            try {
-                Sites = await readSitesFromJSON("projects");
-                addPins(Sites);
-            } catch (error) {
-                console.error("Error loading sites:", error);
+        function getSite(imageName){
+          for (let i = 0; i < Sites.length; i++) {
+            let comparedName = imageName.slice(0,-6)+".png";
+            if(Sites[i].photo_name == comparedName){
+              return Sites[i];
             }
-        };
-
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", function () {
-                navigator.serviceWorker
-                    .register("js/serviceWorker.js")
-                    .then(res => console.log("service worker registered"))
-                    .catch(err => console.log("service worker not registered", err))
-            })
+          }
         }
 
-        const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
+    </script>
 
+    <script>
         function setMap(latitude, longitude) {
             map = map.setView([latitude, longitude], 17);
         }
 
+        const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
+
         if (isMobile) {
-            document.getElementById('map').style.height = "60vh";
-            var script = document.createElement('script');
-            script.src = 'js/position.js';
-            document.head.appendChild(script);
             if ("geolocation" in navigator) {
                 navigator.geolocation.getCurrentPosition((position) => {
                     setMap(position.coords.latitude, position.coords.longitude);
                 }, error => {
                     alert("Need permission to use your location in order to use your camera");
                 });
+                document.getElementById('map').style.height = "60vh";
+                var script = document.createElement('script');
+                script.src = 'js/position.js';
+                document.head.appendChild(script);
             }
             else {
                 // If not mobile, hide the camera button
@@ -102,10 +102,56 @@
                     You can not use the camera on this app")
             }
         }
+        else {
+            document.getElementById('camera-button').style.display = 'none';
+            document.getElementById('map').style.height = "80vh";
+        }
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
+
+        // Example spot with updated coordinates, larger popup, a button, and a dropdown list
+        // var ledomeVegetal = L.marker([49.18171143760297, -0.34688136578783596]).addTo(map);
+        // ledomeVegetal.bindPopup(
+        //     "<div class='popup-content'>" +
+        //     "<b>Le Dôme Végétalisé</b><br>" +
+        //     "Caractéristiques (proba): A, B, C<br>" +
+        //     '<img src="images/ledome_vegetal.png" alt="Le Dôme Végétal Image" style="width:100%; height:auto;">' +
+        //     "</div>" +
+        //     '<div id="gallery-container">' +
+        //     '<img id="current-image" src="./images/ledome_vegetal.png" alt="Gallery Image" width="100%">' +
+        //     '<button id="next-button" onclick ="swapImages()">Next</button>' +
+        //     '<br><button onclick="onButtonClick()">Voter pour</button>' +
+        //     '<br><label for="dropdown">Choose an option:</label>' +
+        //     '<select id="dropdown">' +
+        //     '<option value="option1">Chaleur</option>' +
+        //     '<option value="option2">Inondation</option>' +
+        //     '<option value="option3">Air</option>' +
+        //     '</select>' +
+        //     '</div>'
+        // );
+        
+        // Function to handle button click
+
+        var nbVotes = 3;
+        var images = [];
+        function updateNbVotes(){
+          divNbVotes = document.getElementById("idNbVotes");
+          divNbVotes.innerHTML = "Il vous reste " + nbVotes + " vote(s)";
+        }
+        updateNbVotes();
+
+function addToVotes(photo_name) {
+    if (nbVotes==0){
+        alert("Vous n'avez plus de vote disponible, vous pouvez encore revenir sur votre décision en cliquant sur le marqueur rouge");
+        return
+    }
+    images.push(photo_name);
+    nbVotes -= 1;
+    updateNbVotes();
+}
+        
     </script>
 
 </body>

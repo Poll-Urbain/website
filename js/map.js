@@ -1,4 +1,3 @@
-
 const R = 6371e3; // Earth radius meters
 
 
@@ -9,8 +8,8 @@ const R = 6371e3; // Earth radius meters
  ***************************/
 class Coordinates {
   constructor(lat, lon) {
-    this.lat = lat;
-    this.lon = lon;
+    this.lat = parseFloat(lat);
+    this.lon = parseFloat(lon);
   }
 }
 
@@ -24,13 +23,13 @@ class Coordinates {
  *                                                 a characteristic on the given site
  ***************************/
 class Site {
-  constructor(coordinates) {
-    this.name = null;
-    this.address = null;
-    this.coordinates = coordinates;
-    this.imageName = null;
-    this.characteriticsVote = {};
-  }
+    constructor(coordinates) {
+        this.name = null;
+        this.address = null;
+        this.coordinates = coordinates;
+        this.imageName = null;
+        this.characteriticsVote = {};
+    }
 }
 
 /****************************
@@ -40,30 +39,30 @@ class Site {
  *  characteritic(string) : characteritic user is voting for 
  ***************************/
 class Vote {
-  constructor(site, user, characteritic) {
-    this.site = site;
-    this.user = user;
-    this.characteritic = characteritic;
-  }
-
-  /****************************
-   *Compute the value of user's vote considering some information :
-   *  Distance between user's address and site's address
-   *  Site's locals priority
-   *  User's preferences
-   *return :
-   *   Float voteValue
-   ***************************/
-  computeVoteValue() {
-    var totalVote;
-    d = distance(this.site.coordinates, this.user.coordinates)
-    for (elm of this.site.characteriticsVote) {
-      totalVote += this.site.characteriticsVote[elm];
+    constructor(site, user, characteritic) {
+        this.site = site;
+        this.user = user;
+        this.characteritic = characteritic;
     }
-    value = 1 / (d + 1) * this.site.characteriticsVote[this.characteritic] / totalVote * computeWeight(rankBuilding) * computeWeight(rankProject);
 
-    return value;
-  }
+    /****************************
+     *Compute the value of user's vote considering some information :
+     *  Distance between user's address and site's address
+     *  Site's locals priority
+     *  User's preferences
+     *return :
+     *   Float voteValue
+     ***************************/
+    computeVoteValue() {
+        var totalVote;
+        d = distance(this.site.coordinates, this.user.coordinates)
+        for (elm of this.site.characteriticsVote) {
+            totalVote += this.site.characteriticsVote[elm];
+        }
+        value = 1 / (d + 1) * this.site.characteriticsVote[this.characteritic] / totalVote * computeWeight(rankBuilding) * computeWeight(rankProject);
+
+        return value;
+    }
 }
 
 /****************************
@@ -74,19 +73,19 @@ class Vote {
  *   Coordinates addressCoord
  ***************************/
 function geocodeAddress(address) {
-  // Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
-  var apiKey = 'a5d1c0cbcabb4a1a8f506c8415d80cb3';
-  var geocodeUrl = 'https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(address) + '&key=' + apiKey;
+    // Replace 'YOUR_OPENCAGE_API_KEY' with your actual OpenCage API key
+    var apiKey = 'a5d1c0cbcabb4a1a8f506c8415d80cb3';
+    var geocodeUrl = 'https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(address) + '&key=' + apiKey;
 
-  return fetch(geocodeUrl)
-    .then(response => response.json())
-    .then(data => {
-      if (data.results.length > 0) {
-        return data.results[0].geometry; // return the coordinates
-      } else {
-        throw new Error("Geocoding failed. Please enter a valid address.");
-      }
-    });
+    return fetch(geocodeUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.results.length > 0) {
+                return data.results[0].geometry; // return the coordinates
+            } else {
+                throw new Error("Geocoding failed. Please enter a valid address.");
+            }
+        });
 }
 
 /****************************
@@ -101,11 +100,10 @@ class User {
     this.address = address;
     this.coordinates = null;
   }
-  coordinates
+  
   async fetchCoordinates() {
     const coords = await geocodeAddress(this.address);
-    this.coordinates = coords;
-    return coords;
+    this.coordinates = new Coordinates(coords.lat, coords.lng);
   }
 }
 
@@ -120,18 +118,12 @@ function readSitesFromJSON(jsonName) {
   return fetch(jsonName + '.json')
     .then(response => response.json())
     .then(jsonData => {
-      var userDataString = localStorage.getItem("userData");
-      var userData = JSON.parse(userDataString);
-      var userAddress = userData.address;
-      var userName = userData.name;
-      let user = new User(userName, userAddress);
-      return user.fetchCoordinates().then(() => {
+      
         let sites = [];
         for (let site of jsonData.projects) {
           sites.push(site);
         }
         return sites;
-      });
     });
 }
 
@@ -144,14 +136,13 @@ function readSitesFromJSON(jsonName) {
  *   Float distance
  ***************************/
 function distance(point1, point2) {
-  const r = 6371e3; // meter
   const p = Math.PI / 180;
 
   const a = 0.5 - Math.cos((point2.lat - point1.lat) * p) / 2
     + Math.cos(point1.lat * p) * Math.cos(point2.lat * p) *
     (1 - Math.cos((point2.lon - point1.lon) * p)) / 2;
-
-  return 2 * r * Math.asin(Math.sqrt(a));
+  console.log("distance : " + 2 * R * Math.asin(Math.sqrt(a)));
+  return 2 * R * Math.asin(Math.sqrt(a));
 }
 
 /****************************
@@ -162,16 +153,16 @@ function distance(point1, point2) {
  *   Float voteValue
  ***************************/
 function computeWeight(voteRank) {
-  return 1 + 0.5 * Math.exp(-voteRank);
+    return 1 + 0.5 * Math.exp(-voteRank);
 }
 
 /****************************
   *Load the rank script 
 ***************************/
 function loadRankScript() {
-  var script = document.createElement('script');
-  script.src = 'js/rank.js';
-  document.head.appendChild(script);
+    var script = document.createElement('script');
+    script.src = 'js/rank.js';
+    document.head.appendChild(script);
 }
 
 /****************************
@@ -179,14 +170,15 @@ function loadRankScript() {
  *parameters :
  *   Site[] sites
  ***************************/
+
 function addPins(sites) {
   for (let i = 0; i < sites.length; i++) {
-    marker[i] = L.marker([sites[i].coordinates.latitude, sites[i].coordinates.longitude]).addTo(map);
+    marker[i] = L.marker([sites[i].coordinates.lat, sites[i].coordinates.lon]).addTo(map);
     htmlPopup = "<div class='popup-content'>" +
       "<b>" + sites[i].name + "</b><br>" +
       "Caractéristiques (proba):" + sites[i].characteristics + "<br>" +
       '<div><img src="images/' + sites[i].photo_name + '" alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
-      '<br><button onclick="onButtonClick()">Voter pour</button>' +
+      '<br><button onclick="addToVotes("'+sites[i].photo_name+'")">Voter pour</button>' +
       '<br><label for="dropdown">Choose an option:</label>' +
       '<select id="dropdown">' +
       '<option value="Chaleur">Chaleur</option>' +
@@ -199,29 +191,26 @@ function addPins(sites) {
   // Add a zone marker
   var zone = L.marker([49.211029, -0.363451]).addTo(map);
 
-  zone.on('click', function () {
-    loadRankScript();
-  });
+    zone.on('click', function () {
+        loadRankScript();
+    });
 
-  zone.bindPopup(
-    '<div id="image-container" class="image-container">' +
-    "<b>Classement des préférences des votes</b><br>" +
-    "<br>" +
-    '</div>'
-  );
+    zone.bindPopup(
+        '<div id="image-container" class="image-container">' +
+        "<b>Classement des préférences des votes</b><br>" +
+        "<br>" +
+        '</div>'
+    );
 
-  zone.setIcon(L.icon({
-    iconUrl: 'images/icons/zone.png',
-    iconSize: [30, 50],
-    iconAnchor: [25, 50],
-    popupAnchor: [0, -50]
-  }));
-  zone.bindTooltip("Côte de nacre", {
-    permanent: true,
-    direction: 'right',
-    offset: [0, 0]
-  });
+    zone.setIcon(L.icon({
+        iconUrl: 'images/icons/zone.png',
+        iconSize: [30, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50]
+    }));
+    zone.bindTooltip("Côte de nacre", {
+        permanent: true,
+        direction: 'right',
+        offset: [0, 0]
+    });
 }
-
-
-

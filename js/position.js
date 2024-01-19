@@ -2,7 +2,6 @@ navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
     /* result.status = "prompt" */
 });
 
-
 navigator.geolocation.getCurrentPosition(function (result) { /* ... */ })
 
 navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
@@ -13,26 +12,32 @@ function onImageTaken(imageURI) {
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition((position) => {
             const formData = new FormData();
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const fileContent = e.target.result;
+                console.log(fileContent);
 
-            formData.append('file', imageURI);
-            formData.append('latitude', position.coords.latitude);
-            formData.append('longitude', position.coords.longitude);
+                formData.append('file', fileContent);
+                formData.append('latitude', position.coords.latitude);
+                formData.append('longitude', position.coords.longitude);
 
-            fetch('https://intensif08.ecole.ensicaen.fr/upload.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Data uploaded successfully!');
-                } else {
-                    console.error('Failed to upload data.');
-                }
-            })
-            .catch(error => {
-                console.error('Error during data upload:', error);
-            });
-            pinOnMap(position.coords.latitude, position.coords.longitude, imageURI);
+                fetch('https://intensif08.ecole.ensicaen.fr/php/upload.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Data uploaded successfully!');
+                        } else {
+                            console.log('Failed to upload data.');
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Error during data upload:', error);
+                    });
+            };
+
+            reader.readAsText(file);
         }, error => {
             alert("Need permission to use your location in order to use your camera");
         });
