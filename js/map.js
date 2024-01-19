@@ -9,8 +9,8 @@ const R = 6371e3; // Earth radius meters
  ***************************/
 class Coordinates {
     constructor(lat, lon) {
-        this.lat = lat;
-        this.lon = lon;
+      this.lat = parseFloat(lat);
+      this.lon = parseFloat(lon);
     }
 }
 
@@ -54,15 +54,16 @@ class Vote {
      *return :
      *   Float voteValue
      ***************************/
-    computeVoteValue() {
-        var totalVote;
-        d = distance(this.site.coordinates, this.user.coordinates)
-        for (elm of this.site.characteriticsVote) {
-            totalVote += this.site.characteriticsVote[elm];
-        }
-        value = 1 / (d + 1) * this.site.characteriticsVote[this.characteritic] / totalVote * computeWeight(rankBuilding) * computeWeight(rankProject);
-
-        return value;
+     computeVoteValue(rankBuilding, rankProject) {
+      var totalVote;
+      const siteCoord = new Coordinates(this.site.coordinates.latitude, this.site.coordinates.longitude);
+      var d = distance(siteCoord, this.user.coordinates);
+      for(elm of this.site.characteriticsVote) {
+        totalVote += this.site.characteriticsVote[elm];
+      }
+      value = 1/(d+1) * this.site.characteriticsVote[this.characteritic]/totalVote * computeWeight(rankBuilding) * computeWeight(rankProject); 
+  
+      return value;
     }
 }
 
@@ -104,8 +105,7 @@ class User {
     coordinates
     async fetchCoordinates() {
         const coords = await geocodeAddress(this.address);
-        this.coordinates = coords;
-        return coords;
+        this.coordinates = new Coordinates(coords.lat, coords.lng);
     }
 }
 
@@ -174,6 +174,16 @@ function loadRankScript() {
     document.head.appendChild(script);
 }
 
+function addToVotes(photo_name) {
+  if (nbVotes==0){
+      alert("Vous n'avez plus de vote disponible, vous pouvez encore revenir sur votre décision en cliquant sur le marqueur rouge");
+      return
+  }
+  images.push(photo_name);
+  nbVotes -= 1;
+  updateNbVotes();
+}
+
 /****************************
  *Adds all Sites on the map with pins 
  *parameters :
@@ -193,7 +203,7 @@ function addPins(sites) {
             "</div>" +
             '<div class="popup-content"><img id=' + sites[i].photo_name + ' src="images/' + newPhotoName + '" alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
             '<button id="next-button" onclick ="swapImages(\'' + sites[i].photo_name + '\')">Next</button>' +
-            '<br><button onclick="onButtonClick()">Voter pour</button>' +
+            '<br><button onclick="addToVotes(\"'+newPhotoName+'\")">Voter pour</button>' +
             "</div>";
         marker[i].bindPopup(htmlPopup);
     }

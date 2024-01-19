@@ -9,11 +9,11 @@
       },
       "photo_name": "ledome/ledome.png",
       "number_of_propositions": 3,
-      "characteristics": [
-        "+5°C en été",
-        "Zone inondable",
-        "Risque d'invasion de nuisible"
-      ]
+      "characteristics": {
+        "Chaleur" : 0,
+        "Inondation" : 0,
+        "Qualité Air" : 0
+      }
     },
     {
       "name": "CHU Caen Normandie",
@@ -24,11 +24,11 @@
       },
       "photo_name": "chu/chu.png",
       "number_of_propositions": 4,
-      "characteristics": [
-        "+7°C en été",
-        "Zone inondable",
-        "Risque d'invasion de nuisible"
-      ]
+      "characteristics": {
+        "Chaleur" : 0,
+        "Inondation" : 0,
+        "Qualité Air" : 0
+      }
     },
     {
       "name": "Campus 2",
@@ -39,10 +39,11 @@
       },
       "photo_name": "campus2/campus2.png",
       "number_of_propositions": 3,
-      "characteristics": [
-        "+4°C en été",
-        "Risque d'invasion de nuisible"
-      ]
+      "characteristics": {
+        "Chaleur" : 0,
+        "Inondation" : 0,
+        "Qualité Air" : 0
+      }
     },
     {
       "name": "Campus 4",
@@ -53,10 +54,11 @@
       },
       "photo_name": "campus4/campus4.png",
       "number_of_propositions": 3,
-      "characteristics": [
-        "+6°C en été",
-        "Risque d'invasion de nuisible"
-      ]
+      "characteristics": {
+        "Chaleur" : 0,
+        "Inondation" : 0,
+        "Qualité Air" : 0
+      }
     },
     {
       "name": "Campus 1",
@@ -67,10 +69,11 @@
       },
       "photo_name": "campus1/campus1.png",
       "number_of_propositions": 3,
-      "characteristics": [
-        "+5°C en été",
-        "Risque d'invasion de nuisible"
-      ]
+      "characteristics": {
+        "Chaleur" : 0,
+        "Inondation" : 0,
+        "Qualité Air" : 0
+      }
     }
   ]
 }
