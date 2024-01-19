@@ -2,7 +2,6 @@ navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
     /* result.status = "prompt" */
 });
 
-
 navigator.geolocation.getCurrentPosition(function (result) { /* ... */ })
 
 navigator.permissions.query({ name: 'geolocation' }).then(function (result) {

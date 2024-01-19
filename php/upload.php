@@ -35,6 +35,8 @@
 
         $updatedData = json_encode($decodedData, JSON_PRETTY_PRINT);
 
+        echo $updatedData;
+
         file_put_contents($jsonFilePath, $updatedData);
     }
 ?>
