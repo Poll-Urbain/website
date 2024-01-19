@@ -42,9 +42,9 @@
             </label>
             <input id="file-input" type="file" name="image" accept="image/*" capture="environment">
         </div>
-<div id="idNbVotes"></div>
-
+        <div id="idNbVotes"></div>
     </main>
+    <script src="js/map.js"></script>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="js/map.js"></script>
@@ -52,6 +52,32 @@
 
     <script>
         var Sites;
+
+        var map = L.map('map').setView([49.183333, -0.350], 17); // Updated coordinates
+        var marker = []
+        var i = 0;
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        window.onload = async function () {
+            try {
+                Sites = await readSitesFromJSON("projects");
+                addPins(Sites);
+            } catch (error) {
+                console.error("Error loading sites:", error);
+            }
+        };
+
+        function getSite(imageName){
+          for (let i = 0; i < Sites.length; i++) {
+            let comparedName = imageName.slice(0,-6)+".png";
+            if(Sites[i].photo_name == comparedName){
+              return Sites[i];
+            }
+          }
+        }
 
         /****************************
         *Handle Button Click 
@@ -75,7 +101,18 @@
 
     </script>
 
+
     <script>
+
+        var nbVotes = 3;
+        var images = [];
+        function updateNbVotes(){
+          divNbVotes = document.getElementById("idNbVotes");
+          divNbVotes.innerHTML = "Il vous reste " + nbVotes + " vote(s)";
+        }
+        updateNbVotes();
+
+
         function setMap(latitude, longitude) {
             map = map.setView([latitude, longitude], 17);
         }

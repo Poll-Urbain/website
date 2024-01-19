@@ -7,10 +7,10 @@ const R = 6371e3; // Earth radius meters
  *  Latitude(float)
  ***************************/
 class Coordinates {
-  constructor(lat, lon) {
-    this.lat = parseFloat(lat);
-    this.lon = parseFloat(lon);
-  }
+    constructor(lat, lon) {
+      this.lat = parseFloat(lat);
+      this.lon = parseFloat(lon);
+    }
 }
 
 /****************************
@@ -53,15 +53,16 @@ class Vote {
      *return :
      *   Float voteValue
      ***************************/
-    computeVoteValue() {
-        var totalVote;
-        d = distance(this.site.coordinates, this.user.coordinates)
-        for (elm of this.site.characteriticsVote) {
-            totalVote += this.site.characteriticsVote[elm];
-        }
-        value = 1 / (d + 1) * this.site.characteriticsVote[this.characteritic] / totalVote * computeWeight(rankBuilding) * computeWeight(rankProject);
-
-        return value;
+     computeVoteValue(rankBuilding, rankProject) {
+      var totalVote;
+      const siteCoord = new Coordinates(this.site.coordinates.latitude, this.site.coordinates.longitude);
+      var d = distance(siteCoord, this.user.coordinates);
+      for(elm of this.site.characteriticsVote) {
+        totalVote += this.site.characteriticsVote[elm];
+      }
+      value = 1/(d+1) * this.site.characteriticsVote[this.characteritic]/totalVote * computeWeight(rankBuilding) * computeWeight(rankProject); 
+  
+      return value;
     }
 }
 
@@ -165,6 +166,16 @@ function loadRankScript() {
     document.head.appendChild(script);
 }
 
+function addToVotes(photo_name) {
+  if (nbVotes==0){
+      alert("Vous n'avez plus de vote disponible, vous pouvez encore revenir sur votre décision en cliquant sur le marqueur rouge");
+      return
+  }
+  images.push(photo_name);
+  nbVotes -= 1;
+  updateNbVotes();
+}
+
 /****************************
  *Adds all Sites on the map with pins 
  *parameters :
@@ -172,24 +183,24 @@ function loadRankScript() {
  ***************************/
 
 function addPins(sites) {
-  for (let i = 0; i < sites.length; i++) {
-    marker[i] = L.marker([sites[i].coordinates.lat, sites[i].coordinates.lon]).addTo(map);
-    htmlPopup = "<div class='popup-content'>" +
-      "<b>" + sites[i].name + "</b><br>" +
-      "Caractéristiques (proba):" + sites[i].characteristics + "<br>" +
-      '<div><img src="images/' + sites[i].photo_name + '" alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
-      '<br><button onclick="addToVotes("'+sites[i].photo_name+'")">Voter pour</button>' +
-      '<br><label for="dropdown">Choose an option:</label>' +
-      '<select id="dropdown">' +
-      '<option value="Chaleur">Chaleur</option>' +
-      '<option value="Inondation">Inondation</option>' +
-      '<option value="Air">Air</option>' +
-      '</select>' +
-      "</div>";
-    marker[i].bindPopup(htmlPopup);
-  }
-  // Add a zone marker
-  var zone = L.marker([49.211029, -0.363451]).addTo(map);
+    for (let i = 0; i < sites.length; i++) {
+        marker[i] = L.marker([sites[i].coordinates.latitude, sites[i].coordinates.longitude]).addTo(map);
+
+        var newPhotoName = sites[i].photo_name.replace(".png", "_1.png");
+
+        htmlPopup = "<div class='popup-content'>" +
+            "<b>" + sites[i].name + "</b><br>" +
+            "Caractéristiques (proba):" + sites[i].characteristics + "<br>" +
+            '<img src="images/' + sites[i].photo_name + '" alt="' + sites[i].name + '" style="width:100%; height:auto;">' +
+            "</div>" +
+            '<div class="popup-content"><img id=' + sites[i].photo_name + ' src="images/' + newPhotoName + '" alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
+            '<button id="next-button" onclick ="swapImages(\'' + sites[i].photo_name + '\')">Next</button>' +
+            '<br><button onclick="addToVotes(\"'+newPhotoName+'\")">Voter pour</button>' +
+            "</div>";
+        marker[i].bindPopup(htmlPopup);
+    }
+    // Add a zone marker
+    var zone = L.marker([49.211029, -0.363451]).addTo(map);
 
     zone.on('click', function () {
         loadRankScript();
