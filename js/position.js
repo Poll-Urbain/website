@@ -12,6 +12,26 @@ navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
 function onImageTaken(imageURI) {
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition((position) => {
+            const formData = new FormData();
+
+            formData.append('file', imageURI);
+            formData.append('latitude', position.coords.latitude);
+            formData.append('longitude', position.coords.longitude);
+
+            fetch('https://intensif08.ecole.ensicaen.fr/upload.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Data uploaded successfully!');
+                } else {
+                    console.error('Failed to upload data.');
+                }
+            })
+            .catch(error => {
+                console.error('Error during data upload:', error);
+            });
             pinOnMap(position.coords.latitude, position.coords.longitude, imageURI);
         }, error => {
             alert("Need permission to use your location in order to use your camera");
@@ -24,6 +44,7 @@ function onImageTaken(imageURI) {
 }
 
 function pinOnMap(latitude, longitude, imageURI) {
+
     var pin =
         "<div class='popup-content'>" +
         "<b>Le Dôme Végétalisé</b><br>" +

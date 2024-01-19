@@ -22,8 +22,6 @@
 
   .image-container {
       max-height: 500px;
-      /* Set your desired maximum height */
       overflow-y: auto;
-      /* Enable vertical scroll if content exceeds the maximum height */
   }
 
