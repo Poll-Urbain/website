@@ -23,7 +23,7 @@
         $imageName = 'user_proposition/user_proposition.png';
         $targetFile = $uploadsDirectory . $imageName;
         
-        move_uploaded_file($_FILES["file_input"]["tmp_name"], $targetFile);
+        move_uploaded_file($_FILES["file-input"]["tmp_name"], $targetFile);
 
         // file_put_contents($targetFile, $imageContents);
 
