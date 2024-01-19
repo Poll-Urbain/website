@@ -24,15 +24,14 @@ function onImageTaken(imageURI) {
             })
             .then(response => {
                 if (response.ok) {
-                    console.log('Data uploaded successfully!');
+                    alert('Data uploaded successfully!');
                 } else {
-                    console.error('Failed to upload data.');
+                    alert('Failed to upload data.');
                 }
             })
             .catch(error => {
-                console.error('Error during data upload:', error);
+                alert('Error during data upload:', error);
             });
-            pinOnMap(position.coords.latitude, position.coords.longitude, imageURI);
         }, error => {
             alert("Need permission to use your location in order to use your camera");
         });
