@@ -47,14 +47,9 @@
 
         $updatedData = json_encode($decodedData, JSON_PRETTY_PRINT);
 
-        file_put_contents($jsonFilePath, $updatedData);
+        // file_put_contents($jsonFilePath, $updatedData);
 
         echo $updatedData;
-
-
-        file_get_contents("../projects.json");
-        $json_data = json_decode($json,true); 
-        echo $json_data;
 
         echo 'Data uploaded successfully!';
     } else {
