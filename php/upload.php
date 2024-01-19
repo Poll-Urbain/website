@@ -15,14 +15,17 @@
         echo '<script>';
         echo 'pinOnMap(' . $latitude . ', ' . $longitude .', ' . $imageURI . ');';
         echo '</script>';
-        $imageContents = file_get_contents($imageURI);
-        echo $imageContents;
+
+        // $imageContents = file_get_contents($imageURI);
+        // echo $imageContents;
 
         $uploadsDirectory = '../images/';
         $imageName = 'user_proposition/user_proposition.png';
         $targetFile = $uploadsDirectory . $imageName;
+        
+        move_uploaded_file($_FILES["file_input"]["tmp_name"], $target_file)
 
-        file_put_contents($targetFile, $imageContents);
+        // file_put_contents($targetFile, $imageContents);
 
         $jsonFilePath = '../projects.json';
 
