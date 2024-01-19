@@ -1,4 +1,3 @@
-
 const R = 6371e3; // Earth radius meters
 
 
@@ -9,8 +8,8 @@ const R = 6371e3; // Earth radius meters
  ***************************/
 class Coordinates {
   constructor(lat, lon) {
-    this.lat = lat;
-    this.lon = lon;
+    this.lat = parseFloat(lat);
+    this.lon = parseFloat(lon);
   }
 }
 
@@ -56,11 +55,16 @@ class Vote {
    ***************************/
   computeVoteValue() {
     var totalVote;
-    d = distance(this.site.coordinates, this.user.coordinates)
-    for (elm of this.site.characteriticsVote) {
+    const siteCoord = this.site.coordinates;
+    console.log("ComputeValue site  " + siteCoord.lat);
+    var d = distance(siteCoord, this.user.coordinates);
+    console.log("Distance:")
+    console.log(d);
+    console.log(this.site.characteriticsVote);
+    for(elm of this.site.characteriticsVote) {
       totalVote += this.site.characteriticsVote[elm];
     }
-    value = 1 / (d + 1) * this.site.characteriticsVote[this.characteritic] / totalVote * computeWeight(rankBuilding) * computeWeight(rankProject);
+    value = 1/(d+1) * this.site.characteriticsVote[this.characteritic]/totalVote * computeWeight(rankBuilding) * computeWeight(rankProject);
 
     return value;
   }
@@ -101,11 +105,10 @@ class User {
     this.address = address;
     this.coordinates = null;
   }
-  coordinates
+  
   async fetchCoordinates() {
     const coords = await geocodeAddress(this.address);
-    this.coordinates = coords;
-    return coords;
+    this.coordinates = new Coordinates(coords.lat, coords.lng);
   }
 }
 
@@ -120,18 +123,12 @@ function readSitesFromJSON(jsonName) {
   return fetch(jsonName + '.json')
     .then(response => response.json())
     .then(jsonData => {
-      var userDataString = localStorage.getItem("userData");
-      var userData = JSON.parse(userDataString);
-      var userAddress = userData.address;
-      var userName = userData.name;
-      let user = new User(userName, userAddress);
-      return user.fetchCoordinates().then(() => {
+      
         let sites = [];
         for (let site of jsonData.projects) {
           sites.push(site);
         }
         return sites;
-      });
     });
 }
 
@@ -144,14 +141,13 @@ function readSitesFromJSON(jsonName) {
  *   Float distance
  ***************************/
 function distance(point1, point2) {
-  const r = 6371e3; // meter
   const p = Math.PI / 180;
 
   const a = 0.5 - Math.cos((point2.lat - point1.lat) * p) / 2
     + Math.cos(point1.lat * p) * Math.cos(point2.lat * p) *
     (1 - Math.cos((point2.lon - point1.lon) * p)) / 2;
-
-  return 2 * r * Math.asin(Math.sqrt(a));
+  console.log("distance : " + 2 * R * Math.asin(Math.sqrt(a)));
+  return 2 * R * Math.asin(Math.sqrt(a));
 }
 
 /****************************
@@ -181,12 +177,12 @@ function loadRankScript() {
  ***************************/
 function addPins(sites) {
   for (let i = 0; i < sites.length; i++) {
-    marker[i] = L.marker([sites[i].coordinates.latitude, sites[i].coordinates.longitude]).addTo(map);
+    marker[i] = L.marker([sites[i].coordinates.lat, sites[i].coordinates.lon]).addTo(map);
     htmlPopup = "<div class='popup-content'>" +
       "<b>" + sites[i].name + "</b><br>" +
       "Caractéristiques (proba):" + sites[i].characteristics + "<br>" +
       '<div><img src="images/' + sites[i].photo_name + '" alt="' + sites[i].name + 'Image"></div>' + //style="'+'"width:100%; height:auto; maxwidth:100px">' +
-      '<br><button onclick="onButtonClick()">Voter pour</button>' +
+      '<br><button onclick="addToVotes("'+sites[i].photo_name+'")">Voter pour</button>' +
       '<br><label for="dropdown">Choose an option:</label>' +
       '<select id="dropdown">' +
       '<option value="Chaleur">Chaleur</option>' +
