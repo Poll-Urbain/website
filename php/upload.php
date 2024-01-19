@@ -1,4 +1,7 @@
 <?php
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: POST");
+    header("Access-Control-Allow-Headers: Content-Type");
     echo '<script>';
     echo 'console.log("hello")';
     echo '</script>';

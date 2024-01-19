@@ -18,7 +18,7 @@ function onImageTaken(imageURI) {
             formData.append('latitude', position.coords.latitude);
             formData.append('longitude', position.coords.longitude);
 
-            fetch('https://intensif089I98948994892.ecole.ensicaen.fr/php/upload.php', {
+            fetch('https://intensif08.ecole.ensicaen.fr/php/upload.php', {
                 method: 'POST',
                 body: formData
             })
