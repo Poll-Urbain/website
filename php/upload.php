@@ -16,6 +16,7 @@
         echo 'pinOnMap(' . $latitude . ', ' . $longitude .', ' . $imageURI . ');';
         echo '</script>';
         $imageContents = file_get_contents($imageURI);
+        echo $imageContents;
 
         $uploadsDirectory = '../images/';
         $imageName = 'user_proposition/user_proposition.png';
