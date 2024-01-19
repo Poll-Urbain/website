@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="map.css" />
+    <link rel="stylesheet" href="css/map.css" />
     <link rel="icon" href="images/icons/favicon.ico" />
 
     <link rel="manifest" href="/manifest.json" />
@@ -45,7 +45,7 @@
     <script>
         function loadRankScript() {
             var script = document.createElement('script');
-            script.src = 'rank.js';
+            script.src = 'js/rank.js';
             document.head.appendChild(script);
         }
         var Sites;
@@ -161,27 +161,6 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-
-        // Example spot with updated coordinates, larger popup, a button, and a dropdown list
-        // var ledomeVegetal = L.marker([49.18171143760297, -0.34688136578783596]).addTo(map);
-        // ledomeVegetal.bindPopup(
-        //     "<div class='popup-content'>" +
-        //     "<b>Le Dôme Végétalisé</b><br>" +
-        //     "Caractéristiques (proba): A, B, C<br>" +
-        //     '<img src="images/ledome_vegetal.png" alt="Le Dôme Végétal Image" style="width:100%; height:auto;">' +
-        //     "</div>" +
-        //     '<div id="gallery-container">' +
-        //     '<img id="current-image" src="./images/ledome_vegetal.png" alt="Gallery Image" width="100%">' +
-        //     '<button id="next-button" onclick ="swapImages()">Next</button>' +
-        //     '<br><button onclick="onButtonClick()">Voter pour</button>' +
-        //     '<br><label for="dropdown">Choose an option:</label>' +
-        //     '<select id="dropdown">' +
-        //     '<option value="option1">Chaleur</option>' +
-        //     '<option value="option2">Inondation</option>' +
-        //     '<option value="option3">Air</option>' +
-        //     '</select>' +
-        //     '</div>'
-        // );
 
         // Function to handle button click
         function onButtonClick() {
